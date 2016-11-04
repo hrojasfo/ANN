@@ -6,7 +6,7 @@
 
 int main()
 {
-	Matrix<float> w(4,2);
+	Matrix<float> w(4,4,"ident");
 
 	w.print();
 
