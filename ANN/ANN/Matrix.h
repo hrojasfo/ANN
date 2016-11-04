@@ -14,6 +14,7 @@ public:
 	~Matrix();
 	void print();
 	void setup_matrix(std::string type);
+	T get(int i, int j);
 };
 
 template<class T>
@@ -49,7 +50,7 @@ void Matrix<T>::print()
 }
 
 template<class T>
-inline void Matrix<T>::setup_matrix(std::string type)
+void Matrix<T>::setup_matrix(std::string type)
 {
 	for (int i = 0; i < m; ++i) {
 		std::vector<T> row;
@@ -71,4 +72,10 @@ inline void Matrix<T>::setup_matrix(std::string type)
 		}
 		matrix.push_back(row);
 	}
+}
+
+template<class T>
+T Matrix<T>::get(int i, int j)
+{
+	return matrix[i][j];
 }

@@ -1,8 +1,8 @@
 ﻿  ANN.cpp
-c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(60): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(53): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(32): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(29): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
+c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(61): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(54): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(33): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(30): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
   c:\users\rojashe\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to function template instantiation 'Matrix<float>::Matrix(int,int,std::string)' being compiled
   c:\users\rojashe\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to class template instantiation 'Matrix<float>' being compiled
   ANN.vcxproj -> C:\Users\rojashe\Source\Repos\ANN\ANN\Debug\ANN.exe
