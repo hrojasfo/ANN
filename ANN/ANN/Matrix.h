@@ -11,10 +11,15 @@ class Matrix
 public:
 	Matrix(int m, int n);
 	Matrix(int m, int n, std::string type);
+	Matrix();
 	~Matrix();
 	void print();
 	void setup_matrix(std::string type);
-	T get(int i, int j);
+	T& get(int i, int j);
+	Matrix<T> operator*(Matrix<T> &b);
+	int get_row();
+	int get_col();
+
 };
 
 template<class T>
@@ -26,11 +31,16 @@ Matrix<T>::Matrix(int m, int n)
 }
 
 template<class T>
-inline Matrix<T>::Matrix(int m, int n, std::string type)
+Matrix<T>::Matrix(int m, int n, std::string type)
 {
 	this->m = m;
 	this->n = n;
 	setup_matrix(type);
+}
+
+template<class T>
+Matrix<T>::Matrix()
+{
 }
 
 template<class T>
@@ -75,7 +85,44 @@ void Matrix<T>::setup_matrix(std::string type)
 }
 
 template<class T>
-T Matrix<T>::get(int i, int j)
+T& Matrix<T>::get(int i, int j)
 {
+	if (i >= m) {
+		throw "Row out of limits";
+	}
+	if (j >= n) {
+		throw "Column out of limits";
+	}
 	return matrix[i][j];
+}
+
+template<class T>
+Matrix<T> Matrix<T>::operator*(Matrix<T>& b)
+{
+	int row = this->get_row();
+	int col = b.get_col();
+	if (this->get_col() != b.get_row()) {
+		throw "Column of firs operand must be equal to second's row";
+	}
+	Matrix<T> result(row,col,"zeros");
+	for (int i = 0; i < row; ++i) {
+		for (int j = 0; j < col; ++j) {
+			for (int k = 0; k < this->get_col(); ++ k) {
+				result.get(i, j) += this->get(i, k) * b.get(k, j);
+			}
+		}
+	}
+	return result;
+}
+
+template<class T>
+int Matrix<T>::get_row()
+{
+	return m;
+}
+
+template<class T>
+int Matrix<T>::get_col()
+{
+	return n;
 }

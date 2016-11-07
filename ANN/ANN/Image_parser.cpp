@@ -57,5 +57,7 @@ Image_parser::Image_parser()
 
 Image_parser::~Image_parser()
 {
-	delete[] memblock;
+	if (memblock) {
+		delete[] memblock;
+	}
 }

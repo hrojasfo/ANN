@@ -1,9 +1,13 @@
-﻿  ANN.cpp
-c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(61): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(54): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(33): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(30): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
-  c:\users\rojashe\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to function template instantiation 'Matrix<float>::Matrix(int,int,std::string)' being compiled
-  c:\users\rojashe\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to class template instantiation 'Matrix<float>' being compiled
-  ANN.vcxproj -> C:\Users\rojashe\Source\Repos\ANN\ANN\Debug\ANN.exe
-  ANN.vcxproj -> C:\Users\rojashe\Source\Repos\ANN\ANN\Debug\ANN.pdb (Full PDB)
+﻿  stdafx.cpp
+  Image_parser.cpp
+c:\users\henry\source\repos\ann\ann\ann\image_parser.cpp(22): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
+c:\users\henry\source\repos\ann\ann\ann\image_parser.cpp(41): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  ANN.cpp
+c:\users\henry\source\repos\ann\ann\ann\matrix.h(71): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  c:\users\henry\source\repos\ann\ann\ann\matrix.h(64): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
+  c:\users\henry\source\repos\ann\ann\ann\matrix.h(38): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
+  c:\users\henry\source\repos\ann\ann\ann\matrix.h(35): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
+  c:\users\henry\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to function template instantiation 'Matrix<float>::Matrix(int,int,std::string)' being compiled
+  c:\users\henry\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to class template instantiation 'Matrix<float>' being compiled
+  Generating Code...
+  ANN.vcxproj -> C:\Users\Henry\Source\Repos\ANN\ANN\Debug\ANN.lib
