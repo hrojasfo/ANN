@@ -8,6 +8,7 @@ class Matrix
 	std::vector< std::vector<T> > matrix;
 	int m;
 	int n;
+	bool trans;
 public:
 	Matrix(int m, int n);
 	Matrix(int m, int n, std::string type);
@@ -17,6 +18,11 @@ public:
 	void setup_matrix(std::string type);
 	T& get(int i, int j);
 	Matrix<T> operator*(Matrix<T> &b);
+	Matrix<T> operator+(Matrix<T> &b);
+	Matrix<T> delta();
+	Matrix<T> delta_out(Matrix<T> &b);
+	void scalar_mult(T num);
+	Matrix<T> one_to_one_mult(Matrix<T> &b);
 	int get_row();
 	int get_col();
 
@@ -102,7 +108,7 @@ Matrix<T> Matrix<T>::operator*(Matrix<T>& b)
 	int row = this->get_row();
 	int col = b.get_col();
 	if (this->get_col() != b.get_row()) {
-		throw "Column of firs operand must be equal to second's row";
+		throw "Column of first operand must be equal to second's row";
 	}
 	Matrix<T> result(row,col,"zeros");
 	for (int i = 0; i < row; ++i) {
@@ -110,6 +116,89 @@ Matrix<T> Matrix<T>::operator*(Matrix<T>& b)
 			for (int k = 0; k < this->get_col(); ++ k) {
 				result.get(i, j) += this->get(i, k) * b.get(k, j);
 			}
+		}
+	}
+	return result;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::operator+(Matrix<T>& b)
+{
+	int row = this->get_row();
+	int col = this->get_col();
+	if (this->get_col() != b.get_col() || this->get_row() != b.get_row()) {
+		throw "The Matrix dimensions are not the same";
+	}
+	Matrix<T> result(row, col, "zeros");
+	for (int i = 0; i < row; ++i) {
+		for (int j = 0; j < col; ++j) {
+			result.get(i, j) = this->get(i, j) + b.get(i, j);
+		}
+	}
+	return result;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::delta()
+{
+	int row = this->get_row();
+	int col = this->get_col();
+
+	Matrix<T> result(row, col, "zeros");
+	for (int i = 0; i < row; ++i) {
+		for (int j = 0; j < col; ++j) {
+			T data = this->get(i, j);
+			result.get(i, j) = data * (1 - data);
+		}
+	}
+	return result;
+}
+
+template<class T>
+void Matrix<T>::scalar_mult(T num)
+{
+	int row = this->get_row();
+	int col = this->get_col();
+
+	for (int i = 0; i < row; ++i) {
+		for (int j = 0; j < col; ++j) {
+			this->get(i, j) = num * this->get(i, j);
+		}
+	}
+	return;
+}
+
+template<class T>
+inline Matrix<T> Matrix<T>::one_to_one_mult(Matrix<T>& b)
+{
+	int row = this->get_row();
+	int col = this->get_col();
+	if (this->get_col() != b.get_col() || this->get_row() != b.get_row()) {
+		throw "The Matrix dimensions are not the same";
+	}
+	Matrix<T> result(row, col, "zeros");
+	for (int i = 0; i < row; ++i) {
+		for (int j = 0; j < col; ++j) {
+			result.get(i, j) = this->get(i, j) * b.get(i, j);
+		}
+	}
+	return result;
+
+}
+
+template<class T>
+Matrix<T> Matrix<T>::delta_out(Matrix<T>& b)
+{
+	int row = this->get_row();
+	int col = this->get_col();
+	if (this->get_col() != b.get_col() || this->get_row() != b.get_row()) {
+		throw "The Matrix dimensions are not the same";
+	}
+	Matrix<T> result(row, col, "zeros");
+	for (int i = 0; i < row; ++i) {
+		for (int j = 0; j < col; ++j) {
+			T data = this->get(i, j);
+			result.get(i, j) = data * (1 - data) * (data - b.get(i, j));
 		}
 	}
 	return result;
