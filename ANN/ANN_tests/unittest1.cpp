@@ -253,6 +253,32 @@ namespace ANN_tests
 				}
 			}
 		}
+		TEST_METHOD(check_matrix_transpose)
+		{
+			Matrix<double> m0(1, 4), m1;
+			m0.get(0, 0) = 1;
+			m0.get(0, 1) = 2;
+			m0.get(0, 2) = 3;
+			m0.get(0, 3) = 4;
+
+			m1 = m0;
+
+			m1 = m0 * m1.transpose_matrix();
+			
+			Assert::AreEqual(30.0, m1.get(0,0));
+
+			m1 = m0;
+			m1 = m1.transpose_matrix() * m0;
+			double expected[4][4]{ { 1, 2, 3,  4 },
+								   { 2, 4, 6,  8 },
+								   { 3, 6, 9,  12},
+								   { 4, 8, 12, 16} };
+			for (int i = 0; i < 4; ++i) {
+				for (int j = 0; j < 4; ++j) {
+						Assert::AreEqual(expected[i][j], m1.get(i, j));
+				}
+			}
+		}
 	};
 	TEST_CLASS(UnitTest2)
 	{

@@ -1,13 +1,8 @@
-﻿  stdafx.cpp
-  Image_parser.cpp
-c:\users\rojashe\source\repos\ann\ann\ann\image_parser.cpp(22): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
-c:\users\rojashe\source\repos\ann\ann\ann\image_parser.cpp(41): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  ANN.cpp
-c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(79): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(72): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(46): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(43): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
+﻿  ANN.cpp
+c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(80): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(73): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(47): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(44): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
   c:\users\rojashe\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to function template instantiation 'Matrix<float>::Matrix(int,int,std::string)' being compiled
   c:\users\rojashe\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to class template instantiation 'Matrix<float>' being compiled
-  Generating Code...
   ANN.vcxproj -> C:\Users\rojashe\Source\Repos\ANN\ANN\Debug\ANN.lib

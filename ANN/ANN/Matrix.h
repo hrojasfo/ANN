@@ -9,7 +9,7 @@ class Matrix
 	std::vector< std::vector<T> > matrix;
 	int m;
 	int n;
-	bool trans;
+	bool transpose = false;
 public:
 	Matrix(int m, int n);
 	Matrix(int m, int n, std::string type);
@@ -27,6 +27,7 @@ public:
 	void sigmoid();
 	int get_row();
 	int get_col();
+	Matrix& transpose_matrix();
 
 };
 
@@ -61,7 +62,7 @@ void Matrix<T>::print()
 {
 	for (int i = 0; i < m; ++i) {
 		for (int j = 0; j < n; ++j) {
-			std::cout << matrix[i][j] << " ";
+			std::cout << this->get(i, j) << " ";
 		}
 		std::cout << '\n';
 	}
@@ -95,13 +96,23 @@ void Matrix<T>::setup_matrix(std::string type)
 template<class T>
 T& Matrix<T>::get(int i, int j)
 {
-	if (i >= m) {
-		throw "Row out of limits";
+	if (transpose) {
+		if (i >= n) {
+			throw "Row out of limits";
+		}
+		if (j >= m) {
+			throw "Column out of limits";
+		}
+		return matrix[j][i];
+	} else {
+		if (i >= m) {
+			throw "Row out of limits";
+		}
+		if (j >= n) {
+			throw "Column out of limits";
+		}
+		return matrix[i][j];
 	}
-	if (j >= n) {
-		throw "Column out of limits";
-	}
-	return matrix[i][j];
 }
 
 template<class T>
@@ -219,11 +230,18 @@ Matrix<T> Matrix<T>::delta_out(Matrix<T>& b)
 template<class T>
 int Matrix<T>::get_row()
 {
-	return m;
+	return (transpose) ? n : m;
 }
 
 template<class T>
 int Matrix<T>::get_col()
 {
-	return n;
+	return (transpose) ? m : n;
+}
+
+template<class T>
+Matrix<T>& Matrix<T>::transpose_matrix()
+{
+	transpose = !transpose;
+	return *this;
 }
