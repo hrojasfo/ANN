@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 template <class T>
 class Matrix
@@ -23,6 +24,7 @@ public:
 	Matrix<T> delta_out(Matrix<T> &b);
 	void scalar_mult(T num);
 	Matrix<T> one_to_one_mult(Matrix<T> &b);
+	void sigmoid();
 	int get_row();
 	int get_col();
 
@@ -184,6 +186,16 @@ inline Matrix<T> Matrix<T>::one_to_one_mult(Matrix<T>& b)
 	}
 	return result;
 
+}
+
+template<class T>
+void Matrix<T>::sigmoid()
+{
+	for (int i = 0; i < this->get_row(); ++i) {
+		for (int j = 0; j < this->get_col(); ++j) {
+			this->get(i, j) = 1 / (1 + exp(-this->get(i, j)));
+		}
+	}
 }
 
 template<class T>

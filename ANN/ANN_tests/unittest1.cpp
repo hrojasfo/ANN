@@ -234,6 +234,25 @@ namespace ANN_tests
 				}
 			}
 		}
+		TEST_METHOD(check_matrix_sigmoid)
+		{
+			Matrix<double> m0(1, 5);
+			m0.get(0, 0) = -2;
+			m0.get(0, 1) = -1;
+			m0.get(0, 2) =  0;
+			m0.get(0, 3) =  1;
+			m0.get(0, 4) = 10;
+
+			m0.sigmoid();
+			double expected[1][5]{ { 0.119202922, 0.268941, 0.5, 0.731059, 0.999955 } };
+
+			for (int i = 0; i < 1; ++i) {
+				for (int j = 0; j < 5; ++j) {
+					Assert::
+					Assert::AreEqual(expected[i][j], m0.get(i, j), 0.00001);
+				}
+			}
+		}
 	};
 	TEST_CLASS(UnitTest2)
 	{
