@@ -279,6 +279,37 @@ namespace ANN_tests
 				}
 			}
 		}
+		TEST_METHOD(check_matrix_push)
+		{
+			Matrix<double> m0(1, 4);
+			m0.get(0, 0) = 1;
+			m0.get(0, 1) = 2;
+			m0.get(0, 2) = 3;
+			m0.get(0, 3) = 4;
+
+			m0.push(42);
+			Assert::AreEqual(5, m0.get_col());
+			Assert::AreEqual(1, m0.get_row());
+
+			double expected[1][5]{ { 1, 2, 3, 4, 42 } };
+			for (int i = 0; i < 1; ++i) {
+				for (int j = 0; j < 5; ++j) {
+					Assert::AreEqual(expected[i][j], m0.get(i, j));
+				}
+			}
+		}
+		TEST_METHOD(check_matrix_vector_constructor)
+		{
+			std::vector<double> expected{ 1, 2, 3, 4, 42 };
+			Matrix<double> m0(expected);
+
+			Assert::AreEqual(5, m0.get_col());
+			Assert::AreEqual(1, m0.get_row());
+
+			for (int i = 0; i < 5; ++i) {
+					Assert::AreEqual(expected[i], m0.get(0, i));
+			}
+		}
 	};
 	TEST_CLASS(UnitTest2)
 	{
@@ -286,7 +317,7 @@ namespace ANN_tests
 		TEST_METHOD(image_parser_contructor)
 		{
 			Image_parser parser;
-			parser.read_bmp("..\\3_0.bmp");
+			parser.read("..\\3_0.bmp");
 		}
 	};
 }

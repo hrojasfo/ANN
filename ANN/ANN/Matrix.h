@@ -7,12 +7,13 @@ template <class T>
 class Matrix
 {
 	std::vector< std::vector<T> > matrix;
-	int m;
-	int n;
+	int m; // rows
+	int n; // cols
 	bool transpose = false;
 public:
 	Matrix(int m, int n);
 	Matrix(int m, int n, std::string type);
+	Matrix(std::vector<T> vec);
 	Matrix();
 	~Matrix();
 	void print();
@@ -23,8 +24,11 @@ public:
 	Matrix<T> delta();
 	Matrix<T> delta_out(Matrix<T> &b);
 	void scalar_mult(T num);
+	void push(T num);
+	void pop();
 	Matrix<T> one_to_one_mult(Matrix<T> &b);
 	void sigmoid();
+	void sigmoid(T scalar);
 	int get_row();
 	int get_col();
 	Matrix& transpose_matrix();
@@ -45,6 +49,14 @@ Matrix<T>::Matrix(int m, int n, std::string type)
 	this->m = m;
 	this->n = n;
 	setup_matrix(type);
+}
+
+template<class T>
+Matrix<T>::Matrix(std::vector<T> vec)
+{
+	matrix.push_back(vec);
+	m = 1;
+	n = vec.size();
 }
 
 template<class T>
@@ -182,7 +194,44 @@ void Matrix<T>::scalar_mult(T num)
 }
 
 template<class T>
-inline Matrix<T> Matrix<T>::one_to_one_mult(Matrix<T>& b)
+void Matrix<T>::push(T num)
+{
+	int row = this->get_row();
+	int col = this->get_col();
+	if (row != 1 && col != 1) {
+		throw "At leat one dimention should be one to do a push";
+	}
+	if (matrix.size() == 1) {
+		matrix.at(0).push_back(num);
+		++n;
+	}
+	else {
+		std::vector<T> pushed;
+		pushed.push_back(num);
+		matrix.push_back(pushed);
+		++m;
+	}
+}
+
+template<class T>
+void Matrix<T>::pop()
+{
+	if (matrix.size() == 1) {
+		if (matrix.at(0).size() > 0) {
+			matrix.at(0).pop_back();
+			--n;
+		}
+	}
+	else {
+		if (matrix.size() > 0) {
+			matrix.pop_back();
+			--m;
+		}
+	}
+}
+
+template<class T>
+Matrix<T> Matrix<T>::one_to_one_mult(Matrix<T>& b)
 {
 	int row = this->get_row();
 	int col = this->get_col();
@@ -205,6 +254,16 @@ void Matrix<T>::sigmoid()
 	for (int i = 0; i < this->get_row(); ++i) {
 		for (int j = 0; j < this->get_col(); ++j) {
 			this->get(i, j) = 1 / (1 + exp(-this->get(i, j)));
+		}
+	}
+}
+
+template<class T>
+void Matrix<T>::sigmoid(T scalar)
+{
+	for (int i = 0; i < this->get_row(); ++i) {
+		for (int j = 0; j < this->get_col(); ++j) {
+			this->get(i, j) = scalar / (1 + exp(-this->get(i, j)));
 		}
 	}
 }
