@@ -13,10 +13,10 @@ namespace neural_network {
 		std::vector<int> layers_size; 
 		std::vector<Matrix<base>> output;
 		std::vector<Matrix<base>> weight;
-		Image_parser parser;
+		//Image_parser *parser;
 		int layers = 0;
 		base alpha = 0.5;
-		int iterations = 5;
+		int iterations = 2;
 		int images = 10;
 
 		void create_internals(const std::vector<int>& in);
@@ -26,11 +26,12 @@ namespace neural_network {
 		Neural_network(const std::vector<int>& in);
 		Neural_network(const std::vector<int>& in, base alpha);
 		~Neural_network();
-		void train(int index);
-		void train(Image_parser parser);
+		void train(Image_parser* parser, int index);
+		void train(Image_parser* parser);
 		Matrix<base> run(const Matrix<base>& input);
-		void store();
-		std::vector<Matrix<base>> Neural_network::read_weights();
+		void store(std::string path = "ann_weights.dat");
+		std::vector<Matrix<base>> Neural_network::read_weights(std::string path = "ann_weights.dat");
+		void load_weights(std::vector<Matrix<base>> weights);
 
 	};
 

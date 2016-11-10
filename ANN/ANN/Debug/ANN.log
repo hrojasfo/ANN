@@ -4,6 +4,6 @@ c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(92): warning C4244: '=': conv
   c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(85): note: while compiling class template member function 'void Matrix<neural_network::base>::setup_matrix(std::string)'
   c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(51): note: see reference to function template instantiation 'void Matrix<neural_network::base>::setup_matrix(std::string)' being compiled
   c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(64): note: while compiling class template member function 'Matrix<neural_network::base>::Matrix(void)'
-  c:\users\rojashe\source\repos\ann\ann\ann\neural_network.cpp(48): note: see reference to function template instantiation 'Matrix<neural_network::base>::Matrix(void)' being compiled
+  c:\users\rojashe\source\repos\ann\ann\ann\neural_network.cpp(49): note: see reference to function template instantiation 'Matrix<neural_network::base>::Matrix(void)' being compiled
   c:\users\rojashe\source\repos\ann\ann\ann\neural_network.cpp(13): note: see reference to class template instantiation 'Matrix<neural_network::base>' being compiled
   ANN.vcxproj -> C:\Users\rojashe\Source\Repos\ANN\ANN\Debug\ANN.lib

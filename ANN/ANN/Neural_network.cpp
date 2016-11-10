@@ -38,13 +38,14 @@ namespace neural_network {
 
 	Neural_network::~Neural_network()
 	{
+		std::cout << "Destroying network...\n";
 	}
 
-	void Neural_network::train(int index)
+	void Neural_network::train(Image_parser* parser, int index)
 	{
-		output[0] = parser.get_image(index, false);
+		output[0] = parser->get_image(index, false);
 		Matrix<base> expected(1,layers_size[layers_size.size() - 1], "zeros");
-		expected.get(0, parser.get_label(index)) = 1.0;
+		expected.get(0, parser->get_label(index)) = 1.0;
 		Matrix<base> last_delta;
 		run();
 		for (int i = layers - 1; i > 0; --i) {
@@ -71,14 +72,13 @@ namespace neural_network {
 		}
 	}
 
-	void Neural_network::train(Image_parser parser)
+	void Neural_network::train(Image_parser* parser)
 	{
-		this->parser = parser;
 		for (int i = 0; i < iterations; ++i) {
 			std::cout << "-I- Running training iteration " << i + 1 << "\n processing image ";
 			for (int j = 0; j < images; ++j) {
 				std::cout << j << ' ';
-				train(j);
+				train(parser, j);
 			}
 			std::cout << '\n';
 		}
@@ -90,10 +90,10 @@ namespace neural_network {
 		return run();
 
 	}
-	void Neural_network::store()
+	void Neural_network::store(std::string path)
 	{
 		std::ofstream outfile;
-		outfile.open("ann_weights.dat", std::ios::binary | std::ios::out);
+		outfile.open(path, std::ios::binary | std::ios::out);
 		int size = weight.size();
 		outfile.write((char*)&size, sizeof(int));
 		for (int i = 0; i < size; ++i) {
@@ -110,10 +110,10 @@ namespace neural_network {
 		}
 		outfile.close();
 	}
-	std::vector<Matrix<base>> Neural_network::read_weights()
+	std::vector<Matrix<base>> Neural_network::read_weights(std::string path)
 	{
 		std::ifstream infile;
-		infile.open("ann_weights.dat", std::ios::binary | std::ios::in);
+		infile.open(path, std::ios::binary | std::ios::in);
 		std::vector<Matrix<base>> result;
 		int size;
 		infile.read((char*)&size, sizeof(int));
@@ -135,6 +135,10 @@ namespace neural_network {
 		}
 		infile.close();
 		return result;
+	}
+	void Neural_network::load_weights(std::vector<Matrix<base>> weights)
+	{
+		weight = weights;
 	}
 	Matrix<base> Neural_network::run()
 	{

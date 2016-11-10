@@ -121,6 +121,7 @@ Image_parser::Image_parser()
 
 Image_parser::~Image_parser()
 {
+	std::cout << "Destroying parser...\n";
 	if (memblock) {
 		delete[] memblock;
 	}
