@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\rojashe\source\repos\ann\ann\ann\</FILEPATH>
+      <FILENAME>ann.cpp</FILENAME>
+      <LINE>13</LINE>
+      <COLUMN>8</COLUMN>
+    </SFA>
+    <DEFECTCODE>6031</DEFECTCODE>
+    <DESCRIPTION>Return value ignored: 'getchar'.</DESCRIPTION>
+    <FUNCTION>main</FUNCTION>
+    <DECORATED>main</DECORATED>
+    <FUNCLINE>7</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT>
+</DEFECTS>

@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "Matrix.h"
 #include "Image_parser.h"
+#include "Neural_network.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -10,6 +11,15 @@ namespace ANN_tests
 	TEST_CLASS(UnitTest1)
 	{
 	public:
+		TEST_METHOD(check_matrix_fixed_value)
+		{
+			Matrix<double> m0(4, 4, 0.5);
+			for (int i = 0; i < 4; ++i) {
+				for (int j = 0; j < 4; ++j) {
+					Assert::AreEqual(0.5, m0.get(i, j));
+				}
+			}
+		}
 		TEST_METHOD(check_identity_matrix_4x4)
 		{
 			Matrix<double> m0(4, 4, "ident");
@@ -318,6 +328,35 @@ namespace ANN_tests
 		{
 			Image_parser parser;
 			parser.read("..\\3_0.bmp");
+		}
+	};
+	TEST_CLASS(UnitTest3)
+	{
+	public:
+		TEST_METHOD(nn_weights_load_store_and_load)
+		{
+			try {
+			neural_network::Neural_network nn(std::vector<int>{2, 4, 2});
+			std::vector<Matrix<float>> w;
+			w.push_back(Matrix<float>(3, 4, 0.5));
+			w.push_back(Matrix<float>(5, 2, 0.5));
+
+			nn.load_weights(w);
+			nn.store();
+			int rows[2]{ 3, 5 };
+			int cols[2]{ 4, 2 };
+				std::vector<Matrix<float>> w0 = nn.read_weights();
+				for (int l = 0; l < 2; ++l) {
+					for (int r = 0; r < rows[l]; ++r) {
+						for (int c = 0; c < cols[l]; ++c) {
+							Assert::AreEqual(0.5, (double)w0[l].get(r, c));
+						}
+					}
+				}
+			}
+			catch (const std::exception& e) {
+				std::cout << e.what();
+			}
 		}
 	};
 }

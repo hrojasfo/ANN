@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\rojashe\source\repos\ann\ann\ann\</FILEPATH>
+      <FILENAME>neural_network.cpp</FILENAME>
+      <LINE>18</LINE>
+      <COLUMN>16</COLUMN>
+    </SFA>
+    <DEFECTCODE>6246</DEFECTCODE>
+    <DESCRIPTION>Local declaration of 'out' hides declaration of the same name in outer scope. For additional information, see previous declaration at line '13' of 'c:\users\rojashe\source\repos\ann\ann\ann\neural_network.cpp'.</DESCRIPTION>
+    <FUNCTION>neural_network::Neural_network::create_internals</FUNCTION>
+    <DECORATED>?create_internals@Neural_network@neural_network@@AAEXABV?$vector@HV?$allocator@H@std@@@std@@@Z</DECORATED>
+    <FUNCLINE>5</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\rojashe\source\repos\ann\ann\ann\</FILEPATH>
+        <FILENAME>neural_network.cpp</FILENAME>
+        <LINE>13</LINE>
+        <COLUMN>18</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

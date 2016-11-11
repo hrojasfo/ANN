@@ -41,11 +41,12 @@ namespace neural_network {
 		std::cout << "Destroying network...\n";
 	}
 
-	void Neural_network::train(Image_parser* parser, int index)
+	//void Neural_network::train(Image_parser* parser, int index)
+	void Neural_network::train(const Matrix<base>& input, const Matrix<base>& expected)
 	{
-		output[0] = parser->get_image(index, false);
-		Matrix<base> expected(1,layers_size[layers_size.size() - 1], "zeros");
-		expected.get(0, parser->get_label(index)) = 1.0;
+		output[0] = input;
+		/*Matrix<base> expected(1,layers_size[layers_size.size() - 1], "zeros");
+		expected.get(0, parser->get_label(index)) = 1.0;//*/
 		Matrix<base> last_delta;
 		run();
 		for (int i = layers - 1; i > 0; --i) {
@@ -53,7 +54,7 @@ namespace neural_network {
 			output[i - 1].push(1);
 			output[i - 1].transpose_matrix();
 			if (i == layers - 1) {
-				deltai = output[i].delta_out(expected);
+				deltai = output[i].delta_out((Matrix<base>)expected);
 				delta = output[i - 1] * deltai;
 			}
 			else {
@@ -78,7 +79,10 @@ namespace neural_network {
 			std::cout << "-I- Running training iteration " << i + 1 << "\n processing image ";
 			for (int j = 0; j < images; ++j) {
 				std::cout << j << ' ';
-				train(parser, j);
+				Matrix<base> input(parser->get_image(j, false));
+				Matrix<base> expected(1, layers_size[layers_size.size() - 1], "zeros");
+				expected.get(0, parser->get_label(j)) = 1.0;
+				train(input, expected);
 			}
 			std::cout << '\n';
 		}
@@ -139,6 +143,11 @@ namespace neural_network {
 	void Neural_network::load_weights(std::vector<Matrix<base>> weights)
 	{
 		weight = weights;
+	}
+	void Neural_network::set_train_params(int it, int imgs)
+	{
+		iterations = it;
+		images = imgs;
 	}
 	Matrix<base> Neural_network::run()
 	{
