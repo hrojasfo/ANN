@@ -138,6 +138,7 @@ namespace neural_network {
 			result.push_back(wi);
 		}
 		infile.close();
+		weight = result;
 		return result;
 	}
 	void Neural_network::load_weights(std::vector<Matrix<base>> weights)

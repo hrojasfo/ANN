@@ -3,12 +3,14 @@
 #include <iostream>
 #include <cmath>
 
+#define FIX 0.001
+
 template <class T>
 class Matrix
 {
 	std::vector< std::vector<T> > matrix;
-	int m; // rows
-	int n; // cols
+	int rows; // rows
+	int cols; // cols
 	bool transpose = false;
 public:
 	Matrix(int m, int n);
@@ -39,16 +41,16 @@ public:
 template<class T>
 Matrix<T>::Matrix(int m, int n)
 {
-	this->m = m;
-	this->n = n;
+	this->rows = m;
+	this->cols = n;
 	setup_matrix("rand");
 }
 
 template<class T>
 Matrix<T>::Matrix(int m, int n, T val)
 {
-	this->m = m;
-	this->n = n;
+	this->rows = m;
+	this->cols = n;
 	for (int i = 0; i < m; ++i) {
 		std::vector<T> row;
 		for (int j = 0; j < n; ++j) {
@@ -61,8 +63,8 @@ Matrix<T>::Matrix(int m, int n, T val)
 template<class T>
 Matrix<T>::Matrix(int m, int n, std::string type)
 {
-	this->m = m;
-	this->n = n;
+	this->rows = m;
+	this->cols = n;
 	setup_matrix(type);
 }
 
@@ -70,8 +72,8 @@ template<class T>
 Matrix<T>::Matrix(std::vector<T> vec)
 {
 	matrix.push_back(vec);
-	m = 1;
-	n = vec.size();
+	rows = 1;
+	cols = vec.size();
 }
 
 template<class T>
@@ -87,8 +89,8 @@ Matrix<T>::~Matrix()
 template<class T>
 void Matrix<T>::print()
 {
-	for (int i = 0; i < m; ++i) {
-		for (int j = 0; j < n; ++j) {
+	for (int i = 0; i < rows; ++i) {
+		for (int j = 0; j < cols; ++j) {
 			std::cout << this->get(i, j) << " ";
 		}
 		std::cout << '\n';
@@ -98,16 +100,16 @@ void Matrix<T>::print()
 template<class T>
 void Matrix<T>::setup_matrix(std::string type)
 {
-	for (int i = 0; i < m; ++i) {
+	for (int i = 0; i < rows; ++i) {
 		std::vector<T> row;
 		
-		for (int j = 0; j < n; ++j) {
+		for (int j = 0; j < cols; ++j) {
 			T val;
 			if (type == "ident") {
 				val = (i == j) ? 1.0 : 0.0;
 			}
 			else if (type == "rand") {
-				val = (T)rand() / RAND_MAX;
+				val = FIX * (T)rand() / RAND_MAX;
 			}
 			else if (type == "ones") {
 				val = 1;
@@ -124,18 +126,18 @@ template<class T>
 T& Matrix<T>::get(int i, int j)
 {
 	if (transpose) {
-		if (i >= n) {
+		if (i >= cols) {
 			throw "Row out of limits";
 		}
-		if (j >= m) {
+		if (j >= rows) {
 			throw "Column out of limits";
 		}
 		return matrix[j][i];
 	} else {
-		if (i >= m) {
+		if (i >= rows) {
 			throw "Row out of limits";
 		}
-		if (j >= n) {
+		if (j >= cols) {
 			throw "Column out of limits";
 		}
 		return matrix[i][j];
@@ -218,13 +220,13 @@ void Matrix<T>::push(T num)
 	}
 	if (matrix.size() == 1) {
 		matrix.at(0).push_back(num);
-		++n;
+		++cols;
 	}
 	else {
 		std::vector<T> pushed;
 		pushed.push_back(num);
 		matrix.push_back(pushed);
-		++m;
+		++rows;
 	}
 }
 
@@ -234,13 +236,13 @@ void Matrix<T>::pop()
 	if (matrix.size() == 1) {
 		if (matrix.at(0).size() > 0) {
 			matrix.at(0).pop_back();
-			--n;
+			--cols;
 		}
 	}
 	else {
 		if (matrix.size() > 0) {
 			matrix.pop_back();
-			--m;
+			--rows;
 		}
 	}
 }
@@ -304,13 +306,13 @@ Matrix<T> Matrix<T>::delta_out(Matrix<T>& b)
 template<class T>
 int Matrix<T>::get_row()
 {
-	return (transpose) ? n : m;
+	return (transpose) ? cols : rows;
 }
 
 template<class T>
 int Matrix<T>::get_col()
 {
-	return (transpose) ? m : n;
+	return (transpose) ? rows : cols;
 }
 
 template<class T>

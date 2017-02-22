@@ -1,19 +1,10 @@
-﻿  ANN.cpp
-c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(107): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(100): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(66): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(63): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
-  c:\users\rojashe\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to function template instantiation 'Matrix<float>::Matrix(int,int,std::string)' being compiled
-  c:\users\rojashe\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to class template instantiation 'Matrix<float>' being compiled
-  Generating Code...
-  Compiling...
-  Neural_network.cpp
+﻿  Neural_network.cpp
 c:\users\rojashe\source\repos\ann\ann\ann\neural_network.cpp(15): warning C4018: '<': signed/unsigned mismatch
-c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(107): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(100): note: while compiling class template member function 'void Matrix<neural_network::base>::setup_matrix(std::string)'
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(66): note: see reference to function template instantiation 'void Matrix<neural_network::base>::setup_matrix(std::string)' being compiled
-  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(79): note: while compiling class template member function 'Matrix<neural_network::base>::Matrix(void)'
+c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(109): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(102): note: while compiling class template member function 'void Matrix<neural_network::base>::setup_matrix(std::string)'
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(68): note: see reference to function template instantiation 'void Matrix<neural_network::base>::setup_matrix(std::string)' being compiled
+  c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(81): note: while compiling class template member function 'Matrix<neural_network::base>::Matrix(void)'
   c:\users\rojashe\source\repos\ann\ann\ann\neural_network.cpp(50): note: see reference to function template instantiation 'Matrix<neural_network::base>::Matrix(void)' being compiled
   c:\users\rojashe\source\repos\ann\ann\ann\neural_network.cpp(13): note: see reference to class template instantiation 'Matrix<neural_network::base>' being compiled
-  Generating Code...
+c:\users\rojashe\source\repos\ann\ann\ann\matrix.h(112): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
   ANN.vcxproj -> C:\Users\rojashe\Source\Repos\ANN\ANN\Debug\ANN.lib
