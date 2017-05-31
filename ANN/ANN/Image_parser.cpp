@@ -75,7 +75,7 @@ std::vector<float> Image_parser::get_image(int index, bool p)
 	int c = 0;
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < cols; ++j) {
-			unsigned int temp = memblock[offset + i * rows + j] & 0xff;
+			unsigned int temp = (memblock[offset + i * rows + j] & 0xff) > 0 ? 1 : 0;
 			result.push_back( (float)temp );
 			//if(p) std::cout << (char)((temp == 0) ? '.' : '*') << ' ';
 			if (p) std::cout << std::setbase(16) << std::setfill('0') << std::setw(2) << temp;

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-#define FIX 0.001
+#define FIX 1
 
 template <class T>
 class Matrix
@@ -43,6 +43,7 @@ Matrix<T>::Matrix(int m, int n)
 {
 	this->rows = m;
 	this->cols = n;
+	
 	setup_matrix("rand");
 }
 

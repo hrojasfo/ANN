@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "Neural_network.h"
+#include <iomanip>
+#include <sstream>
 
 namespace neural_network {
+	// in contains the size for all the layers of the ANN
 	void Neural_network::create_internals(const std::vector<int>& in)
 	{
 		if (in.size() < 2) {
@@ -13,10 +16,13 @@ namespace neural_network {
 		Matrix<base> out(1, in[0]);
 		output.push_back(out);
 		for (int i = 1; i < in.size(); ++i) {
-			Matrix<base> w(in[i - 1] + 1, in[i]);
+			//Matrix<base> w(in[i - 1] + 1, in[i]);
+			Matrix<base> w(in[i - 1], in[i]);
 			weight.push_back(w);
 			Matrix<base> out(1, in[i]);
 			output.push_back(out);
+			Matrix<base> bia(1, in[i]);
+			bias.push_back(bia);
 		}
 	}
 
@@ -45,46 +51,91 @@ namespace neural_network {
 	void Neural_network::train(const Matrix<base>& input, const Matrix<base>& expected)
 	{
 		output[0] = input;
-		/*Matrix<base> expected(1,layers_size[layers_size.size() - 1], "zeros");
-		expected.get(0, parser->get_label(index)) = 1.0;//*/
+
 		Matrix<base> last_delta;
 		run();
 		for (int i = layers - 1; i > 0; --i) {
 			Matrix<base> delta, deltai;
-			output[i - 1].push(1);
 			output[i - 1].transpose_matrix();
 			if (i == layers - 1) {
 				deltai = output[i].delta_out((Matrix<base>)expected);
-				delta = output[i - 1] * deltai;
 			}
 			else {
 				deltai = last_delta * weight[i].transpose_matrix();
-				deltai.pop();
 				weight[i].transpose_matrix();
 				deltai = deltai.one_to_one_mult(output[i].delta());
-				delta = output[i - 1] * deltai;
 			}
-			output[i - 1].transpose_matrix();
-			output[i - 1].pop();
 			last_delta = deltai;
-			delta.scalar_mult(-alpha);
+			deltai.scalar_mult(-alpha);
+			delta = output[i - 1] * deltai;
+			output[i - 1].transpose_matrix();
 			weight[i - 1] = weight[i - 1] + delta;
-
+			bias[i - 1] = bias[i - 1] + deltai;
 		}
 	}
 
 	void Neural_network::train(Image_parser* parser)
 	{
 		for (int i = 0; i < iterations; ++i) {
-			std::cout << "-I- Running training iteration " << i + 1 << "\n processing image ";
+			std::cout << std::setbase(10) << "-I- Running training iteration " << i + 1 << "\n processing image ";
 			for (int j = 0; j < images; ++j) {
-				std::cout << j << ' ';
+				//std::cout << j << ' ';
 				Matrix<base> input(parser->get_image(j, false));
 				Matrix<base> expected(1, layers_size[layers_size.size() - 1], "zeros");
 				expected.get(0, parser->get_label(j)) = 1.0;
+				int label = parser->get_label(j);
 				train(input, expected);
 			}
 			std::cout << '\n';
+		}
+	}
+
+	// The format for the train_data is the following:
+	// <input entries> <output entries> <size of training data entries>
+	// <entry 1 inputs> <entry 1 outputs>
+	// <entry 2 inputs> <entry 2 outputs>
+	// ...
+	void Neural_network::train(std::string path)
+	{
+		std::ifstream train_data;
+		train_data.open(path);
+		std::stringstream ss;
+		std::string line;
+		int in_size;
+		int out_size;
+		int size;
+		std::getline(train_data,line);
+		ss.str(line);
+		ss >> in_size >> out_size >> size;
+		std::cout << "in = " << in_size << " out = " << out_size << " size = " << size << '\n';
+		std::vector<Matrix<base>> input;
+		std::vector<Matrix<base>> expected;
+		// Read all training lines
+		for (int t = 0; t < size; ++t) {
+			std::getline(train_data, line);
+			ss.clear();
+			ss.str(line);
+			Matrix<base> t_in(1,in_size);
+			Matrix<base> t_out(1, out_size);
+			// Read inputs
+			for (int in = 0; in < in_size; ++in) {
+				ss >> t_in.get(0, in);
+			}
+			// Read outputs
+			for (int out = 0; out < out_size; ++out) {
+				ss >> t_out.get(0, out);
+			}
+			input.push_back(t_in);
+			expected.push_back(t_out);
+		}
+		train_data.close();
+
+		// Train the NN
+		std::cout << "Iteration ";
+		for (int i = 0; i < iterations; ++i) {
+			for (int entry = 0; entry < size; ++entry) {
+				train(input[entry], expected[entry]);
+			}
 		}
 	}
 
@@ -94,6 +145,7 @@ namespace neural_network {
 		return run();
 
 	}
+
 	void Neural_network::store(std::string path)
 	{
 		std::ofstream outfile;
@@ -114,6 +166,7 @@ namespace neural_network {
 		}
 		outfile.close();
 	}
+
 	std::vector<Matrix<base>> Neural_network::read_weights(std::string path)
 	{
 		std::ifstream infile;
@@ -141,22 +194,24 @@ namespace neural_network {
 		weight = result;
 		return result;
 	}
+
 	void Neural_network::load_weights(std::vector<Matrix<base>> weights)
 	{
 		weight = weights;
 	}
+
 	void Neural_network::set_train_params(int it, int imgs)
 	{
 		iterations = it;
 		images = imgs;
 	}
+
 	Matrix<base> Neural_network::run()
 	{
 		for (int i = 1; i < layers; ++i) {
-			output[i - 1].push(1);  // Add theta
 			output[i] = output[i - 1] * weight[i - 1];
+			output[i] = output[i] + bias[i - 1];
 			output[i].sigmoid();
-			output[i - 1].pop();
 		}
 		return output[layers - 1];
 	}

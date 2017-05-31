@@ -29,7 +29,7 @@ namespace ANN_tests
 				}
 			}
 		}
-		TEST_METHOD(check_identity_matrix_1kx1k)
+		/*TEST_METHOD(check_identity_matrix_1kx1k)
 		{
 			int size = 1000;
 			Matrix<double> m0(size, size, "ident");
@@ -38,7 +38,7 @@ namespace ANN_tests
 					Assert::AreEqual((i == j) ? 1.0 : 0.0, m0.get(i, j));
 				}
 			}
-		}
+		}//*/
 		TEST_METHOD(check_zeros_matrix_4x4)
 		{
 			Matrix<double> m0(4, 4, "zeros");
@@ -357,6 +357,13 @@ namespace ANN_tests
 			catch (const std::exception& e) {
 				std::cout << e.what();
 			}
+		}
+		TEST_METHOD(nn_train_from_file)
+		{
+			neural_network::Neural_network nn(std::vector<int>{2, 3, 1});
+			nn.train("train_data.txt");
+			//Assert::AreEqual(0.5, 0.2);
+
 		}
 	};
 }

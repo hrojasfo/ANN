@@ -8,33 +8,53 @@
 int main()
 {
 
-	try {
-		neural_network::Neural_network nn(std::vector<int>{2, 4, 2});
-		std::vector<Matrix<float>> w;
-		w.push_back(Matrix<float>(3, 4, 0.5));
-		w.push_back(Matrix<float>(5, 2, 0.5));
+	neural_network::Neural_network nn(std::vector<int>{2, 3, 1}, 0.5);
+	nn.set_train_params(5000, 1);
+	nn.train();
 
-		nn.load_weights(w);
-		nn.store();
+	Matrix<float> out0;
+	Matrix<float> in0(1, 2);
+	in0.get(0, 0) = 1;
+	in0.get(0, 1) = 0;
+	out0 = nn.run(in0);
+	std::cout << "0 1\n";
+	for (int i = 0; i < out0.get_col(); ++i) {
+		std::cout << out0.get(0, i) << " ";
+	}
+	std::cout << '\n';
 
-		std::vector<Matrix<float>> w0 = nn.read_weights();
-		for (int l = 0; l < w0.size(); ++l) {
-			for (int r = 0; r < w0[l].get_row(); ++r) {
-				for (int c = 0; c < w0[l].get_col(); ++c) {
-					std::cout << w0[l].get(r, c) << ' ';
-				}
-				std::cout << '\n';
-			}
-			std::cout << '\n';
-		}
+	in0.get(0, 0) = 0;
+	in0.get(0, 1) = 0;
+	out0 = nn.run(in0);
+	std::cout << "0 0\n";
+	for (int i = 0; i < out0.get_col(); ++i) {
+		std::cout << out0.get(0, i) << " ";
 	}
-	catch (const std::exception& e) {
-		std::cout << e.what();
+	std::cout << '\n';
+
+	in0.get(0, 0) = 1;
+	in0.get(0, 1) = 1;
+	out0 = nn.run(in0);
+	std::cout << "1 1\n";
+	for (int i = 0; i < out0.get_col(); ++i) {
+		std::cout << out0.get(0, i) << " ";
 	}
-	//getchar();
-	//return 0;
-	Matrix<double> a0(1, 1);
-	Image_parser parser;
+	std::cout << '\n';
+
+	in0.get(0, 0) = 0;
+	in0.get(0, 1) = 1;
+	out0 = nn.run(in0);
+	std::cout << "1 0\n";
+	for (int i = 0; i < out0.get_col(); ++i) {
+		std::cout << out0.get(0, i) << " ";
+	}
+	std::cout << '\n';
+
+
+	getchar();
+	return 0;
+
+	/*Image_parser parser;
 	std::string file = "..\\train-images.idx3-ubyte";
 	std::string label = "..\\train-labels.idx1-ubyte";
 	parser.read(file);
@@ -43,17 +63,16 @@ int main()
 	parser.get_image();
 	parser.print_bmp();
 
-	neural_network::Neural_network images_nn(std::vector<int>{784, 100, 10});
-	//images_nn.set_train_params(6, 1);
-	//images_nn.train(&parser);
-	//images_nn.store();
+	neural_network::Neural_network images_nn(std::vector<int>{784, 100, 10}, 0.7);
+
 	//std::vector<Matrix<float>> weights = images_nn.read_weights();
-	/*std::cout << "Layers: " << result.size() << '\n';
-	for (int i = 0; i < result.size(); ++i) {
-		std::cout << "Rows: " << result[i].get_row() << ", Colums: " << result[i].get_col() << '\n';
-		std::cout << "0 0: " << result[i].get(0, 0) << '\n';
-	}//*/
-	images_nn.read_weights();
+	//images_nn.load_weights(weights);
+
+	images_nn.set_train_params(20, 100);
+	images_nn.train(&parser);
+	images_nn.store();
+
+
 	Matrix<float> out = images_nn.run(Matrix<float>(parser.get_image(0,false)));
 
 	//getchar();
