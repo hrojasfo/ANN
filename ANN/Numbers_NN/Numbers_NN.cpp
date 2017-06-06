@@ -5,10 +5,12 @@
 #include "Matrix.h"
 #include "Image_parser.h"
 #include "Neural_network.h"
+
+
 int main()
 {
 
-	neural_network::Neural_network nn(std::vector<int>{2, 3, 1}, 0.5);
+	/*neural_network::Neural_network nn(std::vector<int>{2, 3, 1}, 0.5);
 	nn.set_train_params(5000, 1);
 	nn.train();
 
@@ -52,9 +54,11 @@ int main()
 
 
 	getchar();
-	return 0;
+	return 0;//*/
 
-	/*Image_parser parser;
+
+	
+	Image_parser parser;
 	std::string file = "..\\train-images.idx3-ubyte";
 	std::string label = "..\\train-labels.idx1-ubyte";
 	parser.read(file);
@@ -63,14 +67,14 @@ int main()
 	parser.get_image();
 	parser.print_bmp();
 
-	neural_network::Neural_network images_nn(std::vector<int>{784, 100, 10}, 0.7);
+	neural_network::Neural_network images_nn(std::vector<int>{784, 30, 10}, 0.05);
 
-	//std::vector<Matrix<float>> weights = images_nn.read_weights();
+	std::vector<Matrix<float>> weights = images_nn.read_weights_and_bias();
 	//images_nn.load_weights(weights);
 
-	images_nn.set_train_params(20, 100);
+	/*images_nn.set_train_params(10, 100);
 	images_nn.train(&parser);
-	images_nn.store();
+	images_nn.store();//*/
 
 
 	Matrix<float> out = images_nn.run(Matrix<float>(parser.get_image(0,false)));

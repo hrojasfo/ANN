@@ -12,7 +12,7 @@ namespace neural_network {
 		// layers_size first entry is the inputs size, last is output
 		std::vector<int> layers_size; 
 		std::vector<Matrix<base>> output;
-		std::vector<Matrix<base>> weight;
+		std::vector<Matrix<base>> weights;
 		std::vector<Matrix<base>> bias;
 		int layers = 0;
 		base alpha = 0.5;
@@ -31,8 +31,9 @@ namespace neural_network {
 		void train(std::string path = "train_data.txt");
 		Matrix<base> run(const Matrix<base>& input);
 		void store(std::string path = "ann_weights.dat");
-		std::vector<Matrix<base>> Neural_network::read_weights(std::string path = "ann_weights.dat");
-		void load_weights(std::vector<Matrix<base>> weights);
+		std::vector<Matrix<base>> Neural_network::read_weights_and_bias(std::string path = "ann_weights.dat");
+		void load_weights_and_bias(std::vector<Matrix<base>> weights);
+		void load_bias(std::vector<Matrix<base>> bias);
 		void set_train_params(int it = 10, int imgs = 10);
 
 	};

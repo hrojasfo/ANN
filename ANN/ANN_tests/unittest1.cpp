@@ -125,7 +125,7 @@ namespace ANN_tests
 		TEST_METHOD(check_matrix_mult_identity)
 		{
 			Matrix<double> m0(5, 5, "ident");
-			Matrix<double> m1(5, 5);
+			Matrix<double> m1(5, 5, "rand");
 
 			Matrix<double> result;
 			result = m0 * m1;
@@ -289,25 +289,7 @@ namespace ANN_tests
 				}
 			}
 		}
-		TEST_METHOD(check_matrix_push)
-		{
-			Matrix<double> m0(1, 4);
-			m0.get(0, 0) = 1;
-			m0.get(0, 1) = 2;
-			m0.get(0, 2) = 3;
-			m0.get(0, 3) = 4;
 
-			m0.push(42);
-			Assert::AreEqual(5, m0.get_col());
-			Assert::AreEqual(1, m0.get_row());
-
-			double expected[1][5]{ { 1, 2, 3, 4, 42 } };
-			for (int i = 0; i < 1; ++i) {
-				for (int j = 0; j < 5; ++j) {
-					Assert::AreEqual(expected[i][j], m0.get(i, j));
-				}
-			}
-		}
 		TEST_METHOD(check_matrix_vector_constructor)
 		{
 			std::vector<double> expected{ 1, 2, 3, 4, 42 };
@@ -340,16 +322,22 @@ namespace ANN_tests
 			std::vector<Matrix<float>> w;
 			w.push_back(Matrix<float>(3, 4, 0.5));
 			w.push_back(Matrix<float>(5, 2, 0.5));
+			w.push_back(Matrix<float>(8, 41, 0.5));
+			w.push_back(Matrix<float>(9, 21, 0.5));
 
-			nn.load_weights(w);
+			int row = w[0].get_row();
+			int col = w[0].get_col();
+
+			nn.load_weights_and_bias(w);
 			nn.store();
-			int rows[2]{ 3, 5 };
-			int cols[2]{ 4, 2 };
-				std::vector<Matrix<float>> w0 = nn.read_weights();
+			int rows[4]{ 3, 5, 8, 9};
+			int cols[4]{ 4, 2, 41, 21 };
+				std::vector<Matrix<float>> w0 = nn.read_weights_and_bias();
+
 				for (int l = 0; l < 2; ++l) {
-					for (int r = 0; r < rows[l]; ++r) {
-						for (int c = 0; c < cols[l]; ++c) {
-							Assert::AreEqual(0.5, (double)w0[l].get(r, c));
+					for (int r = 0; r < row; ++r) {
+						for (int c = 0; c < col; ++c) {
+							Assert::AreEqual((double)w[l].get(r, c), (double)w0[l].get(r, c));
 						}
 					}
 				}

@@ -1,9 +1,21 @@
 ﻿  Neural_network.cpp
-c:\users\hrojas\repo\ann-master\ann-master\ann\ann\neural_network.cpp(18): warning C4018: '<': signed/unsigned mismatch
-c:\users\hrojas\repo\ann-master\ann-master\ann\ann\matrix.h(110): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
-  c:\users\hrojas\repo\ann-master\ann-master\ann\ann\matrix.h(103): note: while compiling class template member function 'void Matrix<neural_network::base>::setup_matrix(std::string)'
-  c:\users\hrojas\repo\ann-master\ann-master\ann\ann\matrix.h(69): note: see reference to function template instantiation 'void Matrix<neural_network::base>::setup_matrix(std::string)' being compiled
-  c:\users\hrojas\repo\ann-master\ann-master\ann\ann\matrix.h(82): note: while compiling class template member function 'Matrix<neural_network::base>::Matrix(void)'
-  c:\users\hrojas\repo\ann-master\ann-master\ann\ann\neural_network.cpp(55): note: see reference to function template instantiation 'Matrix<neural_network::base>::Matrix(void)' being compiled
-  c:\users\hrojas\repo\ann-master\ann-master\ann\ann\neural_network.cpp(16): note: see reference to class template instantiation 'Matrix<neural_network::base>' being compiled
-  ANN.vcxproj -> C:\Users\hrojas\repo\ANN-master\ANN-master\ANN\Debug\ANN.lib
+c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(18): warning C4018: '<': signed/unsigned mismatch
+c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(205): warning C4018: '<': signed/unsigned mismatch
+c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(206): warning C4018: '<': signed/unsigned mismatch
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(136): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(130): note: while compiling class template member function 'void Matrix<neural_network::base>::setup_matrix(std::string)'
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(68): note: see reference to function template instantiation 'void Matrix<neural_network::base>::setup_matrix(std::string)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(88): note: while compiling class template member function 'Matrix<neural_network::base>::Matrix(const Matrix<neural_network::base> &)'
+  c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(61): note: see reference to function template instantiation 'Matrix<neural_network::base>::Matrix(const Matrix<neural_network::base> &)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(16): note: see reference to class template instantiation 'Matrix<neural_network::base>' being compiled
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(139): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): note: see declaration of 'std::copy::_Unchecked_iterators::_Deprecate'
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(93): note: see reference to function template instantiation '_OutIt std::copy<T*,T*>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=neural_network::base *,
+              T=neural_network::base,
+              _InIt=neural_network::base *
+          ]
+  ANN.vcxproj -> C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\ANN.lib

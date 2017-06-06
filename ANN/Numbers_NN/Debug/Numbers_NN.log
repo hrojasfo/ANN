@@ -1,2 +1,16 @@
-﻿  Numbers_NN.vcxproj -> C:\Users\hrojas\repo\ANN-master\ANN-master\ANN\Debug\Numbers_NN.exe
-  Numbers_NN.vcxproj -> C:\Users\hrojas\repo\ANN-master\ANN-master\ANN\Debug\Numbers_NN.pdb (Partial PDB)
+﻿  Numbers_NN.cpp
+c:\users\hrojas\source\repos\ann\ann\numbers_nn\numbers_nn.cpp(70): warning C4305: 'argument': truncation from 'double' to 'neural_network::base'
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): note: see declaration of 'std::copy::_Unchecked_iterators::_Deprecate'
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(104): note: see reference to function template instantiation '_OutIt std::copy<T*,T*>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=neural_network::base *,
+              T=neural_network::base,
+              _InIt=neural_network::base *
+          ]
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(98): note: while compiling class template member function 'Matrix<neural_network::base> &Matrix<neural_network::base>::operator =(const Matrix<neural_network::base> &)'
+  c:\users\hrojas\source\repos\ann\ann\numbers_nn\numbers_nn.cpp(86): note: see reference to function template instantiation 'Matrix<neural_network::base> &Matrix<neural_network::base>::operator =(const Matrix<neural_network::base> &)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\numbers_nn\numbers_nn.cpp(80): note: see reference to class template instantiation 'Matrix<neural_network::base>' being compiled
+  Numbers_NN.vcxproj -> C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\Numbers_NN.exe
+  Numbers_NN.vcxproj -> C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\Numbers_NN.pdb (Partial PDB)

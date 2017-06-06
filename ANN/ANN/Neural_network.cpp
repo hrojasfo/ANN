@@ -17,11 +17,11 @@ namespace neural_network {
 		output.push_back(out);
 		for (int i = 1; i < in.size(); ++i) {
 			//Matrix<base> w(in[i - 1] + 1, in[i]);
-			Matrix<base> w(in[i - 1], in[i]);
-			weight.push_back(w);
+			Matrix<base> w(in[i - 1], in[i], "rand");
+			weights.push_back(w);
 			Matrix<base> out(1, in[i]);
 			output.push_back(out);
-			Matrix<base> bia(1, in[i]);
+			Matrix<base> bia(1, in[i], "rand");
 			bias.push_back(bia);
 		}
 	}
@@ -61,15 +61,15 @@ namespace neural_network {
 				deltai = output[i].delta_out((Matrix<base>)expected);
 			}
 			else {
-				deltai = last_delta * weight[i].transpose_matrix();
-				weight[i].transpose_matrix();
+				deltai = last_delta * weights[i].transpose_matrix();
+				weights[i].transpose_matrix();
 				deltai = deltai.one_to_one_mult(output[i].delta());
 			}
 			last_delta = deltai;
 			deltai.scalar_mult(-alpha);
 			delta = output[i - 1] * deltai;
 			output[i - 1].transpose_matrix();
-			weight[i - 1] = weight[i - 1] + delta;
+			weights[i - 1] = weights[i - 1] + delta;
 			bias[i - 1] = bias[i - 1] + deltai;
 		}
 	}
@@ -77,9 +77,9 @@ namespace neural_network {
 	void Neural_network::train(Image_parser* parser)
 	{
 		for (int i = 0; i < iterations; ++i) {
-			std::cout << std::setbase(10) << "-I- Running training iteration " << i + 1 << "\n processing image ";
+			std::cout << std::setbase(10) << "-I- Running training iteration " << i << "\n processing image ";
 			for (int j = 0; j < images; ++j) {
-				//std::cout << j << ' ';
+				std::cout << j << ' ';
 				Matrix<base> input(parser->get_image(j, false));
 				Matrix<base> expected(1, layers_size[layers_size.size() - 1], "zeros");
 				expected.get(0, parser->get_label(j)) = 1.0;
@@ -150,16 +150,18 @@ namespace neural_network {
 	{
 		std::ofstream outfile;
 		outfile.open(path, std::ios::binary | std::ios::out);
-		int size = weight.size();
+		int size = weights.size() << 1; // by 2 to include bias
+		int half = size >> 1;
 		outfile.write((char*)&size, sizeof(int));
 		for (int i = 0; i < size; ++i) {
-			int row = weight[i].get_row();
-			int col = weight[i].get_col();
+			// store first the weights then the bias
+			int row = (i < (size >> 1)) ? weights[i].get_row() : bias[i-half].get_row();
+			int col = (i < (size >> 1)) ? weights[i].get_col() : bias[i-half].get_col();
 			outfile.write((char*)&row, sizeof(int));
 			outfile.write((char*)&col, sizeof(int));
 			for (int r = 0; r < row; ++r) {
 				for (int c = 0; c < col; ++c) {
-					base val = weight[i].get(r,c);
+					base val = (i < (size >> 1)) ? weights[i].get(r,c) : bias[i-half].get(r,c);
 					outfile.write((char*)&val, sizeof(base));
 				}
 			}
@@ -167,7 +169,7 @@ namespace neural_network {
 		outfile.close();
 	}
 
-	std::vector<Matrix<base>> Neural_network::read_weights(std::string path)
+	std::vector<Matrix<base>> Neural_network::read_weights_and_bias(std::string path)
 	{
 		std::ifstream infile;
 		infile.open(path, std::ios::binary | std::ios::in);
@@ -177,7 +179,6 @@ namespace neural_network {
 		for (int i = 0; i < size; ++i) {
 			int row;
 			int col;
-			
 			infile.read((char*)&row, sizeof(int));
 			infile.read((char*)&col, sizeof(int));
 			Matrix<base> wi(row,col);
@@ -189,15 +190,31 @@ namespace neural_network {
 				}
 			}
 			result.push_back(wi);
+
 		}
 		infile.close();
-		weight = result;
+		load_weights_and_bias(result);
+		//weights = result;
 		return result;
 	}
 
-	void Neural_network::load_weights(std::vector<Matrix<base>> weights)
+	void Neural_network::load_weights_and_bias(std::vector<Matrix<base>> input)
 	{
-		weight = weights;
+		weights.clear();
+		bias.clear();
+		for (int i = 0; i < input.size(); ++i) {
+			if (i < (input.size() >> 1)) {
+				weights.push_back(input[i]);
+			}
+			else {
+				bias.push_back(input[i]);
+			}
+		}
+	}
+
+	void Neural_network::load_bias(std::vector<Matrix<base>> bias)
+	{
+		this->bias = bias;
 	}
 
 	void Neural_network::set_train_params(int it, int imgs)
@@ -209,7 +226,7 @@ namespace neural_network {
 	Matrix<base> Neural_network::run()
 	{
 		for (int i = 1; i < layers; ++i) {
-			output[i] = output[i - 1] * weight[i - 1];
+			output[i] = output[i - 1] * weights[i - 1];
 			output[i] = output[i] + bias[i - 1];
 			output[i].sigmoid();
 		}
