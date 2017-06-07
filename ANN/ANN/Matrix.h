@@ -3,49 +3,68 @@
 #include <iostream>
 #include <cmath>
 
+#ifdef _DEBUG
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+// Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
+// allocations to be of _CLIENT_BLOCK type
+#else
+#define DBG_NEW new
+#endif
+
 #define FIX 0.001
 
 template <class T>
 class Matrix
 {
-	T *matrix;
+	T *matrix = nullptr;
 	int rows; // rows
 	int cols; // cols
 	bool transpose = false;
 public:
+	Matrix();
 	Matrix(int m, int n);
 	Matrix(int m, int n, T val);
 	Matrix(int m, int n, std::string type);
 	Matrix(std::vector<T> vec);
-	Matrix();
 	Matrix(const Matrix<T>& obj);
+//	Matrix(Matrix<T>&& obj);
 	~Matrix();
+
+	int get_row();
+	int get_col();
+	T& get(int i, int j);
+	Matrix& transpose_matrix();
+
 	void print();
 	void setup_matrix(std::string type);
-	T& get(int i, int j);
+
 	Matrix<T> operator*(Matrix<T> &b);
 	Matrix<T> operator+(Matrix<T> &b);
 	Matrix<T> & operator=(const Matrix<T> & obj);
+//	Matrix<T> & operator=(Matrix<T>&& obj);
 	Matrix<T> delta();
 	Matrix<T> delta_out(Matrix<T> &b);
 	void scalar_mult(T num);
-	//void push(T num);
-	//void pop();
 	Matrix<T> one_to_one_mult(Matrix<T> &b);
 	void sigmoid();
 	void sigmoid(T scalar);
-	int get_row();
-	int get_col();
-	Matrix& transpose_matrix();
-
 };
+
+template<class T>
+Matrix<T>::Matrix()
+{
+	matrix = nullptr;
+	rows = 0;
+	cols = 0;
+	transpose = false;
+}
 
 template<class T>
 Matrix<T>::Matrix(int m, int n)
 {
 	this->rows = m;
 	this->cols = n;
-	matrix = new T[rows*cols];
+	matrix = DBG_NEW T[rows*cols];
 }
 
 template<class T>
@@ -54,7 +73,7 @@ Matrix<T>::Matrix(int m, int n, T val)
 	this->rows = m;
 	this->cols = n;
 	matrix = new T[rows*cols];
-	//matrix = new T*[rows];
+	//matrix = DBG_NEW T*[rows];
 	for (int i = 0; i < rows * cols; ++i) {
 		matrix[i] = val;
 	}
@@ -79,39 +98,99 @@ Matrix<T>::Matrix(std::vector<T> vec)
 }
 
 template<class T>
-Matrix<T>::Matrix()
+Matrix<T>::Matrix(const Matrix<T> &other)
 {
+	rows = other.rows;
+	cols = other.cols;
+	transpose = other.transpose;
+	matrix = DBG_NEW T[rows*cols];
+	std::copy(other.matrix, other.matrix + (rows*cols), matrix);
 }
 
-template<class T>
-Matrix<T>::Matrix(const Matrix<T> &obj)
-{
-	rows = obj.rows;
-	cols = obj.cols;
-	transpose = obj.transpose;
-	matrix = new T[rows*cols];
-	std::copy(obj.matrix, obj.matrix + (rows*cols), matrix);
-
-}//*/
-
-template<class T>
-Matrix<T> & Matrix<T>::operator=(const Matrix<T> & obj) {
-	if (this != &obj) {
-		rows = obj.rows;
-		cols = obj.cols;
-		transpose = obj.transpose;
-		matrix = new T[rows*cols];
-		std::copy(obj.matrix, obj.matrix + (rows*cols), matrix);
-
-	}
-	return *this;
-}//*/
+//template<class T>
+//Matrix<T>::Matrix(Matrix<T> &&obj)
+//{
+//	obj.rows = 0;
+//	obj.cols = 0;
+//	obj.transpose = false;
+//	obj.matrix = nullptr;
+//}
 
 template<class T>
 Matrix<T>::~Matrix()
 {
-	if(matrix != NULL)
+	if (matrix != NULL)
 		delete[] matrix;
+}
+
+template<class T>
+Matrix<T> & Matrix<T>::operator=(const Matrix<T> & other) {
+	if (this != &other) {
+		T * new_matrix = DBG_NEW T[other.rows*other.cols];
+		std::copy(other.matrix, other.matrix + (other.rows*other.cols), new_matrix);
+		rows = other.rows;
+		cols = other.cols;
+		delete[] matrix;
+		transpose = other.transpose;
+		matrix = new_matrix;//*/
+
+		/////
+		std::ofstream outfile;
+		outfile.open("assignment_pointers.txt", std::ios::app);
+		outfile << matrix << '\n';
+		outfile.close();
+		//std::swap(rows, other.rows);
+		//std::swap(cols, other.cols);
+		//std::swap(transpose, other.transpose);
+		//std::swap(matrix, other.rows);
+	}
+	return *this;
+}
+
+//template<class T>
+//Matrix<T> & Matrix<T>::operator=(Matrix<T> && obj) {
+//	delete[] matrix;
+//	rows = obj.rows;
+//	cols = obj.cols;
+//	transpose = obj.transpose;
+//	matrix = obj.matrix;
+//	obj.matrix = nullptr;
+//	return *this;
+//}
+
+template<class T>
+int Matrix<T>::get_row()
+{
+	return (transpose) ? cols : rows;
+}
+
+template<class T>
+int Matrix<T>::get_col()
+{
+	return (transpose) ? rows : cols;
+}
+
+template<class T>
+T& Matrix<T>::get(int i, int j)
+{
+	int row_size = get_row();
+	int col_size = get_col();
+	int row = i;
+	int col = j;
+	if (transpose) {
+		row = j;
+		col = i;
+	}
+	if (i >= row_size) throw "Row out of limits";
+	if (j >= col_size) throw "Column out of limits";
+	return matrix[row*col_size + col];
+}
+
+template<class T>
+Matrix<T>& Matrix<T>::transpose_matrix()
+{
+	transpose = !transpose;
+	return *this;
 }
 
 template<class T>
@@ -128,7 +207,7 @@ void Matrix<T>::print()
 template<class T>
 void Matrix<T>::setup_matrix(std::string type)
 {
-	matrix = new T[rows*cols];
+	matrix = DBG_NEW T[rows*cols];
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < cols; ++j) {
 			T val;
@@ -148,29 +227,6 @@ void Matrix<T>::setup_matrix(std::string type)
 	}
 }
 
-template<class T>
-T& Matrix<T>::get(int i, int j)
-{
-	if (transpose) {
-		if (i >= cols) {
-			throw "Row out of limits";
-		}
-		if (j >= rows) {
-			throw "Column out of limits";
-		}
-		//return matrix[j][i];
-		return matrix[j*cols + i];
-	} else {
-		if (i >= rows) {
-			throw "Row out of limits";
-		}
-		if (j >= cols) {
-			throw "Column out of limits";
-		}
-		//return matrix[i][j];
-		return matrix[i*cols + j];
-	}
-}
 
 template<class T>
 Matrix<T> Matrix<T>::operator*(Matrix<T>& b)
@@ -241,42 +297,6 @@ void Matrix<T>::scalar_mult(T num)
 	return;
 }
 
-//template<class T>
-//void Matrix<T>::push(T num)
-//{
-//	int row = this->get_row();
-//	int col = this->get_col();
-//	if (row != 1 && col != 1) {
-//		throw "At leat one dimention should be one to do a push";
-//	}
-//	if (matrix.size() == 1) {
-//		matrix.at(0).push_back(num);
-//		++cols;
-//	}
-//	else {
-//		std::vector<T> pushed;
-//		pushed.push_back(num);
-//		matrix.push_back(pushed);
-//		++rows;
-//	}
-//}
-
-//template<class T>
-//void Matrix<T>::pop()
-//{
-//	if (matrix.size() == 1) {
-//		if (matrix.at(0).size() > 0) {
-//			matrix.at(0).pop_back();
-//			--cols;
-//		}
-//	}
-//	else {
-//		if (matrix.size() > 0) {
-//			matrix.pop_back();
-//			--rows;
-//		}
-//	}
-//}
 
 template<class T>
 Matrix<T> Matrix<T>::one_to_one_mult(Matrix<T>& b)
@@ -334,21 +354,4 @@ Matrix<T> Matrix<T>::delta_out(Matrix<T>& b)
 	return result;
 }
 
-template<class T>
-int Matrix<T>::get_row()
-{
-	return (transpose) ? cols : rows;
-}
 
-template<class T>
-int Matrix<T>::get_col()
-{
-	return (transpose) ? rows : cols;
-}
-
-template<class T>
-Matrix<T>& Matrix<T>::transpose_matrix()
-{
-	transpose = !transpose;
-	return *this;
-}

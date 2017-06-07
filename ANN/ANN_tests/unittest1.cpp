@@ -309,7 +309,7 @@ namespace ANN_tests
 		TEST_METHOD(image_parser_contructor)
 		{
 			Image_parser parser;
-			parser.read("..\\3_0.bmp");
+			parser.read_images("..\\3_0.bmp");
 		}
 	};
 	TEST_CLASS(UnitTest3)

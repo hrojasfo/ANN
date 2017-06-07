@@ -29,7 +29,7 @@ int Image_parser::get_info_be(char * arr, int offset, int size)
 	return result;
 }
 
-void Image_parser::read(std::string path)
+void Image_parser::read_images(std::string path)
 {
 	std::ifstream image;
 	image.open(path, std::ios::binary | std::ios::ate);

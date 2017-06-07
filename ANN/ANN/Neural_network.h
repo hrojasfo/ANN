@@ -16,11 +16,11 @@ namespace neural_network {
 		std::vector<Matrix<base>> bias;
 		int layers = 0;
 		base alpha = 0.5;
-		int iterations = 10;
-		int images = 10;
+		int epochs = 10;
+		int batch_size = 10;
 
 		void create_internals(const std::vector<int>& in);
-		Matrix<base> run();
+		Matrix<base> forward();
 	public:
 		Neural_network();
 		Neural_network(const std::vector<int>& in);

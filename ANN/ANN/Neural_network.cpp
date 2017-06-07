@@ -47,13 +47,12 @@ namespace neural_network {
 		std::cout << "Destroying network...\n";
 	}
 
-	//void Neural_network::train(Image_parser* parser, int index)
 	void Neural_network::train(const Matrix<base>& input, const Matrix<base>& expected)
 	{
 		output[0] = input;
 
 		Matrix<base> last_delta;
-		run();
+		forward();
 		for (int i = layers - 1; i > 0; --i) {
 			Matrix<base> delta, deltai;
 			output[i - 1].transpose_matrix();
@@ -72,14 +71,15 @@ namespace neural_network {
 			weights[i - 1] = weights[i - 1] + delta;
 			bias[i - 1] = bias[i - 1] + deltai;
 		}
+		//output.clear();
 	}
 
 	void Neural_network::train(Image_parser* parser)
 	{
-		for (int i = 0; i < iterations; ++i) {
-			std::cout << std::setbase(10) << "-I- Running training iteration " << i << "\n processing image ";
-			for (int j = 0; j < images; ++j) {
-				std::cout << j << ' ';
+		for (int i = 0; i < epochs; ++i) {
+			std::cout << std::setbase(10) << "-I- Running training iteration " << i << "\n processing images ";
+			for (int j = 0; j < batch_size; ++j) {
+				//std::cout << j << ' ';
 				Matrix<base> input(parser->get_image(j, false));
 				Matrix<base> expected(1, layers_size[layers_size.size() - 1], "zeros");
 				expected.get(0, parser->get_label(j)) = 1.0;
@@ -132,7 +132,7 @@ namespace neural_network {
 
 		// Train the NN
 		std::cout << "Iteration ";
-		for (int i = 0; i < iterations; ++i) {
+		for (int i = 0; i < epochs; ++i) {
 			for (int entry = 0; entry < size; ++entry) {
 				train(input[entry], expected[entry]);
 			}
@@ -142,7 +142,7 @@ namespace neural_network {
 	Matrix<base> Neural_network::run(const Matrix<base>& input)
 	{
 		output[0] = input;
-		return run();
+		return forward();
 
 	}
 
@@ -194,7 +194,6 @@ namespace neural_network {
 		}
 		infile.close();
 		load_weights_and_bias(result);
-		//weights = result;
 		return result;
 	}
 
@@ -202,8 +201,10 @@ namespace neural_network {
 	{
 		weights.clear();
 		bias.clear();
+		int half = input.size() >> 1;
+		// weights are in the lower half and bias in the top of the array
 		for (int i = 0; i < input.size(); ++i) {
-			if (i < (input.size() >> 1)) {
+			if (i < half) {
 				weights.push_back(input[i]);
 			}
 			else {
@@ -219,11 +220,11 @@ namespace neural_network {
 
 	void Neural_network::set_train_params(int it, int imgs)
 	{
-		iterations = it;
-		images = imgs;
+		epochs = it;
+		batch_size = imgs;
 	}
 
-	Matrix<base> Neural_network::run()
+	Matrix<base> Neural_network::forward()
 	{
 		for (int i = 1; i < layers; ++i) {
 			output[i] = output[i - 1] * weights[i - 1];

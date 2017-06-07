@@ -15,7 +15,7 @@ class Image_parser
 	int pointer = 0;
 public:
 	void print_bmp();
-	void read(std::string path);
+	void read_images(std::string path);
 	void read_labels(std::string path);
     std::vector<float> get_image();
 	int get_label(int index);

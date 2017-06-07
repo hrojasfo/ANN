@@ -6,6 +6,9 @@
 #include "Image_parser.h"
 #include "Neural_network.h"
 
+#define _CRTDBG_MAP_ALLOC  
+#include <stdlib.h>  
+#include <crtdbg.h> 
 
 int main()
 {
@@ -56,12 +59,14 @@ int main()
 	getchar();
 	return 0;//*/
 
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
+	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 	
 	Image_parser parser;
 	std::string file = "..\\train-images.idx3-ubyte";
 	std::string label = "..\\train-labels.idx1-ubyte";
-	parser.read(file);
+	parser.read_images(file);
 	parser.read_labels(label);
 	std::cout << "Printing...\n";
 	parser.get_image();
@@ -72,7 +77,7 @@ int main()
 	std::vector<Matrix<float>> weights = images_nn.read_weights_and_bias();
 	//images_nn.load_weights(weights);
 
-	/*images_nn.set_train_params(10, 100);
+	images_nn.set_train_params(1, 1);
 	images_nn.train(&parser);
 	images_nn.store();//*/
 
@@ -93,6 +98,7 @@ int main()
 		std::cout << "size " << image.size() << ", label " << label << '\n';
 		in = getchar();
 	}//*/
+	_CrtDumpMemoryLeaks();
     return 0;
 }
 
