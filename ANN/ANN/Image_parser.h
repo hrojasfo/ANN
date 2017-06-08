@@ -5,10 +5,10 @@
 
 class Image_parser
 {
-	char *memblock;
-	char *labels;
-	int rows;
-	int cols;
+	char *memblock = nullptr;
+	char *labels = nullptr;
+	int rows = 0;
+	int cols = 0;
 	int size = 10000;
 	int get_info(char *arr, int offset, int size);
 	int get_info_be(char *arr, int offset, int size);

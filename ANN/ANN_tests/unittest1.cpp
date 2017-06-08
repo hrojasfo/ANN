@@ -330,14 +330,14 @@ namespace ANN_tests
 
 			nn.load_weights_and_bias(w);
 			nn.store();
-			int rows[4]{ 3, 5, 8, 9};
-			int cols[4]{ 4, 2, 41, 21 };
+
 			std::vector<Matrix<float>> w0 = nn.read_weights_and_bias();
 
 				for (int l = 0; l < 2; ++l) {
 					for (int r = 0; r < row; ++r) {
 						for (int c = 0; c < col; ++c) {
-							Assert::AreEqual((double)w[l].get(r, c), (double)w0[l].get(r, c));
+							float temp0 = w0[l].get(r, c);
+							Assert::AreEqual(w[l].get(r, c), temp0);
 						}
 					}
 				}

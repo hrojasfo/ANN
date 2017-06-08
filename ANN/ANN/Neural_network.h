@@ -31,7 +31,7 @@ namespace neural_network {
 		void train(std::string path = "train_data.txt");
 		Matrix<base> run(const Matrix<base>& input);
 		void store(std::string path = "ann_weights.dat");
-		std::vector<Matrix<base>>& Neural_network::read_weights_and_bias(std::string path = "ann_weights.dat");
+		std::vector<Matrix<base>> Neural_network::read_weights_and_bias(std::string path = "ann_weights.dat");
 		void load_weights_and_bias(const std::vector<Matrix<base>>& weights);
 		void set_train_params(int it = 10, int imgs = 10);
 

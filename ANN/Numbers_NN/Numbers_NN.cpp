@@ -83,7 +83,7 @@ int main()
 	images_nn.read_weights_and_bias();
 	//images_nn.load_weights(weights);
 
-	/*images_nn.set_train_params(200, 200);
+	images_nn.set_train_params(20, 200);
 	images_nn.train(&parser);
 	images_nn.store();//*/
 
@@ -108,7 +108,8 @@ int main()
 			}
 		}
 		std::cout << '\n';
-		std::vector<float> image = parser.get_image(c,true);
+		//std::vector<float> image = 
+		parser.get_image(c,true);
 		int label = parser.get_label(c++);
 		std::cout << "Label " << label << '\n';
 		std::cout << "Guess " << max << '\n';

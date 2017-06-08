@@ -170,7 +170,7 @@ namespace neural_network {
 		outfile.close();
 	}
 
-	std::vector<Matrix<base>>& Neural_network::read_weights_and_bias(std::string path)
+	std::vector<Matrix<base>> Neural_network::read_weights_and_bias(std::string path)
 	{
 		std::ifstream infile;
 		infile.open(path, std::ios::binary | std::ios::in);
