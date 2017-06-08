@@ -68,10 +68,11 @@ namespace neural_network {
 			deltai.scalar_mult(-alpha);
 			delta = output[i - 1] * deltai;
 			output[i - 1].transpose_matrix();
-			weights[i - 1] = weights[i - 1] + delta;
-			bias[i - 1] = bias[i - 1] + deltai;
+			weights[i - 1] = delta + weights[i - 1];
+			bias[i - 1] = deltai + bias[i - 1];
+			//weights[i - 1].add(delta);
+			//bias[i - 1].add(deltai);
 		}
-		//output.clear();
 	}
 
 	void Neural_network::train(Image_parser* parser)
@@ -169,7 +170,7 @@ namespace neural_network {
 		outfile.close();
 	}
 
-	std::vector<Matrix<base>> Neural_network::read_weights_and_bias(std::string path)
+	std::vector<Matrix<base>>& Neural_network::read_weights_and_bias(std::string path)
 	{
 		std::ifstream infile;
 		infile.open(path, std::ios::binary | std::ios::in);
@@ -197,7 +198,7 @@ namespace neural_network {
 		return result;
 	}
 
-	void Neural_network::load_weights_and_bias(std::vector<Matrix<base>> input)
+	void Neural_network::load_weights_and_bias(const std::vector<Matrix<base>>& input)
 	{
 		weights.clear();
 		bias.clear();
@@ -211,11 +212,6 @@ namespace neural_network {
 				bias.push_back(input[i]);
 			}
 		}
-	}
-
-	void Neural_network::load_bias(std::vector<Matrix<base>> bias)
-	{
-		this->bias = bias;
 	}
 
 	void Neural_network::set_train_params(int it, int imgs)

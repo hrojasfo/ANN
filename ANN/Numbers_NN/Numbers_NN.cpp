@@ -6,9 +6,9 @@
 #include "Image_parser.h"
 #include "Neural_network.h"
 
-#define _CRTDBG_MAP_ALLOC  
-#include <stdlib.h>  
-#include <crtdbg.h> 
+//#define _CRTDBG_MAP_ALLOC  
+//#include <stdlib.h>  
+//#include <crtdbg.h> 
 
 int main()
 {
@@ -59,10 +59,15 @@ int main()
 	getchar();
 	return 0;//*/
 
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
+	//_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 	
+	//_CrtSetBreakAlloc(2025);
+
+
+	Matrix<double> test_m(5,5,"ident");
+
 	Image_parser parser;
 	std::string file = "..\\train-images.idx3-ubyte";
 	std::string label = "..\\train-labels.idx1-ubyte";
@@ -74,10 +79,11 @@ int main()
 
 	neural_network::Neural_network images_nn(std::vector<int>{784, 30, 10}, 0.05);
 
-	std::vector<Matrix<float>> weights = images_nn.read_weights_and_bias();
+	//std::vector<Matrix<float>> weights = 
+	images_nn.read_weights_and_bias();
 	//images_nn.load_weights(weights);
 
-	images_nn.set_train_params(1, 1);
+	/*images_nn.set_train_params(200, 200);
 	images_nn.train(&parser);
 	images_nn.store();//*/
 
@@ -88,17 +94,27 @@ int main()
 	char in = '0';
 	int c = 0;
 	while (in != 'q') {
-		out = images_nn.run(Matrix<float>(parser.get_image(c, false)));
+		Matrix<float> image_in = parser.get_image(c, false);
+		out = images_nn.run(image_in);
+		//out = images_nn.run(Matrix<float>(parser.get_image(c, false)));
+		int max = 0;
+		float max_val = 0.0;
 		for (int i = 0; i < out.get_col(); ++i) {
-			std::cout << out.get(0, i)  << " ";
+			float temp = out.get(0, i);
+			std::cout << temp << " ";
+			if(temp > max_val) {
+				max_val = temp;
+				max = i;
+			}
 		}
 		std::cout << '\n';
 		std::vector<float> image = parser.get_image(c,true);
 		int label = parser.get_label(c++);
-		std::cout << "size " << image.size() << ", label " << label << '\n';
+		std::cout << "Label " << label << '\n';
+		std::cout << "Guess " << max << '\n';
 		in = getchar();
 	}//*/
-	_CrtDumpMemoryLeaks();
+	//_CrtDumpMemoryLeaks();
     return 0;
 }
 

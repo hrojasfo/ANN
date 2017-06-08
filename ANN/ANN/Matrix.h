@@ -17,8 +17,8 @@ template <class T>
 class Matrix
 {
 	T *matrix = nullptr;
-	int rows; // rows
-	int cols; // cols
+	int rows = 0; // rows
+	int cols = 0; // cols
 	bool transpose = false;
 public:
 	Matrix();
@@ -26,8 +26,8 @@ public:
 	Matrix(int m, int n, T val);
 	Matrix(int m, int n, std::string type);
 	Matrix(std::vector<T> vec);
-	Matrix(const Matrix<T>& obj);
-//	Matrix(Matrix<T>&& obj);
+	Matrix(const Matrix<T>& other);
+	Matrix(Matrix<T>&& other);
 	~Matrix();
 
 	int get_row();
@@ -40,10 +40,11 @@ public:
 
 	Matrix<T> operator*(Matrix<T> &b);
 	Matrix<T> operator+(Matrix<T> &b);
-	Matrix<T> & operator=(const Matrix<T> & obj);
-//	Matrix<T> & operator=(Matrix<T>&& obj);
+	Matrix<T> & operator=(const Matrix<T> & other);
+//	Matrix<T> & operator=(Matrix<T>&& other);
 	Matrix<T> delta();
 	Matrix<T> delta_out(Matrix<T> &b);
+	void add(Matrix<T> &b);
 	void scalar_mult(T num);
 	Matrix<T> one_to_one_mult(Matrix<T> &b);
 	void sigmoid();
@@ -53,27 +54,21 @@ public:
 template<class T>
 Matrix<T>::Matrix()
 {
-	matrix = nullptr;
-	rows = 0;
-	cols = 0;
-	transpose = false;
 }
 
 template<class T>
 Matrix<T>::Matrix(int m, int n)
+	: rows(m), cols(n)
 {
-	this->rows = m;
-	this->cols = n;
-	matrix = DBG_NEW T[rows*cols];
+	matrix = new T[rows*cols];
 }
 
 template<class T>
 Matrix<T>::Matrix(int m, int n, T val)
+	: rows(m), cols(n)
 {
-	this->rows = m;
-	this->cols = n;
 	matrix = new T[rows*cols];
-	//matrix = DBG_NEW T*[rows];
+	//matrix = new T*[rows];
 	for (int i = 0; i < rows * cols; ++i) {
 		matrix[i] = val;
 	}
@@ -81,9 +76,8 @@ Matrix<T>::Matrix(int m, int n, T val)
 
 template<class T>
 Matrix<T>::Matrix(int m, int n, std::string type)
+	: rows(m), cols(n)
 {
-	this->rows = m;
-	this->cols = n;
 	setup_matrix(type);
 }
 
@@ -103,58 +97,59 @@ Matrix<T>::Matrix(const Matrix<T> &other)
 	rows = other.rows;
 	cols = other.cols;
 	transpose = other.transpose;
-	matrix = DBG_NEW T[rows*cols];
+	matrix = new T[rows*cols];
 	std::copy(other.matrix, other.matrix + (rows*cols), matrix);
 }
 
-//template<class T>
-//Matrix<T>::Matrix(Matrix<T> &&obj)
-//{
-//	obj.rows = 0;
-//	obj.cols = 0;
-//	obj.transpose = false;
-//	obj.matrix = nullptr;
-//}
+template<class t>
+Matrix<t>::Matrix(Matrix<t> &&other)
+{
+	rows = other.rows;
+	cols = other.cols;
+	transpose = other.transpose;
+	matrix = other.matrix;
+
+	other.rows = 0;
+	other.cols = 0;
+	other.transpose = false;
+	other.matrix = nullptr;
+}
 
 template<class T>
 Matrix<T>::~Matrix()
 {
-	if (matrix != NULL)
-		delete[] matrix;
+
+	if (matrix != NULL) delete[] matrix;
+
 }
 
 template<class T>
 Matrix<T> & Matrix<T>::operator=(const Matrix<T> & other) {
 	if (this != &other) {
-		T * new_matrix = DBG_NEW T[other.rows*other.cols];
+		T * new_matrix = new T[other.rows*other.cols];
 		std::copy(other.matrix, other.matrix + (other.rows*other.cols), new_matrix);
 		rows = other.rows;
 		cols = other.cols;
 		delete[] matrix;
 		transpose = other.transpose;
-		matrix = new_matrix;//*/
+		matrix = new_matrix;
 
-		/////
-		std::ofstream outfile;
-		outfile.open("assignment_pointers.txt", std::ios::app);
-		outfile << matrix << '\n';
-		outfile.close();
-		//std::swap(rows, other.rows);
-		//std::swap(cols, other.cols);
-		//std::swap(transpose, other.transpose);
-		//std::swap(matrix, other.rows);
 	}
 	return *this;
 }
 
 //template<class T>
-//Matrix<T> & Matrix<T>::operator=(Matrix<T> && obj) {
+//Matrix<T> & Matrix<T>::operator=(Matrix<T> && other) {
 //	delete[] matrix;
-//	rows = obj.rows;
-//	cols = obj.cols;
-//	transpose = obj.transpose;
-//	matrix = obj.matrix;
-//	obj.matrix = nullptr;
+//	rows = other.rows;
+//	cols = other.cols;
+//	transpose = other.transpose;
+//	matrix = other.matrix;
+//
+//	other.rows = 0;
+//	other.cols = 0;
+//	other.transpose = false;
+//	other.matrix = nullptr;
 //	return *this;
 //}
 
@@ -207,7 +202,7 @@ void Matrix<T>::print()
 template<class T>
 void Matrix<T>::setup_matrix(std::string type)
 {
-	matrix = DBG_NEW T[rows*cols];
+	matrix = new T[rows*cols];
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < cols; ++j) {
 			T val;
@@ -352,6 +347,21 @@ Matrix<T> Matrix<T>::delta_out(Matrix<T>& b)
 		}
 	}
 	return result;
+}
+
+template<class T>
+void Matrix<T>::add(Matrix<T>& b)
+{
+	int row = this->get_row();
+	int col = this->get_col();
+	if (this->get_col() != b.get_col() || this->get_row() != b.get_row()) {
+		throw "The Matrix dimensions are not the same";
+	}
+	for (int i = 0; i < row; ++i) {
+		for (int j = 0; j < col; ++j) {
+			this->get(i, j) = this->get(i, j) + b.get(i, j);
+		}
+	}
 }
 
 

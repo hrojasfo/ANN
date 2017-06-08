@@ -332,7 +332,7 @@ namespace ANN_tests
 			nn.store();
 			int rows[4]{ 3, 5, 8, 9};
 			int cols[4]{ 4, 2, 41, 21 };
-				std::vector<Matrix<float>> w0 = nn.read_weights_and_bias();
+			std::vector<Matrix<float>> w0 = nn.read_weights_and_bias();
 
 				for (int l = 0; l < 2; ++l) {
 					for (int r = 0; r < row; ++r) {
