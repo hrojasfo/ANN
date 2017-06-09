@@ -66,7 +66,7 @@ int main()
 	//_CrtSetBreakAlloc(2025);
 
 
-	Matrix<double> test_m(5,5,"ident");
+	//Matrix<double> test_m(5,5,"ident");
 
 	Image_parser parser;
 	std::string file = "..\\train-images.idx3-ubyte";

@@ -1,8 +1,31 @@
-﻿  Image_parser.cpp
-c:\users\hrojas\source\repos\ann\ann\ann\image_parser.cpp(37): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
-c:\users\hrojas\source\repos\ann\ann\ann\image_parser.cpp(58): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
-c:\users\hrojas\source\repos\ann\ann\ann\image_parser.cpp(106): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+﻿  ANN.cpp
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(210): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(204): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(81): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(79): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
+  c:\users\hrojas\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to function template instantiation 'Matrix<float>::Matrix(int,int,std::string)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to class template instantiation 'Matrix<float>' being compiled
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(213): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating Code...
-  Skipping... (no relevant changes detected)
+  Compiling...
   Neural_network.cpp
+c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(18): warning C4018: '<': signed/unsigned mismatch
+c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(207): warning C4018: '<': signed/unsigned mismatch
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(210): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(204): note: while compiling class template member function 'void Matrix<neural_network::base>::setup_matrix(std::string)'
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(81): note: see reference to function template instantiation 'void Matrix<neural_network::base>::setup_matrix(std::string)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(96): note: while compiling class template member function 'Matrix<neural_network::base>::Matrix(const Matrix<neural_network::base> &)'
+  c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(60): note: see reference to function template instantiation 'Matrix<neural_network::base>::Matrix(const Matrix<neural_network::base> &)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(16): note: see reference to class template instantiation 'Matrix<neural_network::base>' being compiled
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(213): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): note: see declaration of 'std::copy::_Unchecked_iterators::_Deprecate'
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(101): note: see reference to function template instantiation '_OutIt std::copy<T*,T*>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=neural_network::base *,
+              T=neural_network::base,
+              _InIt=neural_network::base *
+          ]
+  Generating Code...
   ANN.vcxproj -> C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\ANN.lib

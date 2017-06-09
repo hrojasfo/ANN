@@ -178,7 +178,7 @@ T& Matrix<T>::get(int i, int j)
 	}
 	if (i >= row_size) throw "Row out of limits";
 	if (j >= col_size) throw "Column out of limits";
-	return matrix[row*col_size + col];
+	return matrix[row*cols + col];
 }
 
 template<class T>
@@ -236,9 +236,7 @@ Matrix<T> Matrix<T>::operator*(Matrix<T>& b)
 		for (int j = 0; j < col; ++j) {
 			result.get(i, j) = 0;
 			for (int k = 0; k < this->get_col(); ++ k) {
-
 				result.get(i, j) += this->get(i, k) * b.get(k, j);
-			
 			}
 		}
 	}
