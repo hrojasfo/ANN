@@ -68,35 +68,36 @@ int main()
 
 	//Matrix<double> test_m(5,5,"ident");
 
-	Image_parser parser;
-	std::string file = "..\\train-images.idx3-ubyte";
-	std::string label = "..\\train-labels.idx1-ubyte";
-	parser.read_images(file);
-	parser.read_labels(label);
+	Image_parser train_data;
+	train_data.read_images("..\\train-images.idx3-ubyte");
+	train_data.read_labels("..\\train-labels.idx1-ubyte");
 	std::cout << "Printing...\n";
-	parser.get_image();
-	parser.print_bmp();
+	train_data.get_image();
+	train_data.print_bmp();
 
 	neural_network::Neural_network images_nn(std::vector<int>{784, 30, 10}, 0.05);
 
 	//std::vector<Matrix<float>> weights = 
 	images_nn.read_weights_and_bias();
-	//images_nn.load_weights(weights);
 
-	images_nn.set_train_params(20, 200);
-	images_nn.train(&parser);
+	/*images_nn.set_train_params(20, 200);
+	images_nn.train(&train_data);
 	images_nn.store();//*/
 
 
-	Matrix<float> out = images_nn.run(Matrix<float>(parser.get_image(0,false)));
+	Matrix<float> out = images_nn.run(Matrix<float>(train_data.get_image(0,false)));
 
-	//getchar();
+
+	// Read test data
+	Image_parser test_data;
+	test_data.read_images("..\\t10k-images-idx3-ubyte");
+	test_data.read_labels("..\\t10k-labels-idx1-ubyte");
+
 	char in = '0';
 	int c = 0;
 	while (in != 'q') {
-		Matrix<float> image_in = parser.get_image(c, false);
+		Matrix<float> image_in = test_data.get_image(c, false);
 		out = images_nn.run(image_in);
-		//out = images_nn.run(Matrix<float>(parser.get_image(c, false)));
 		int max = 0;
 		float max_val = 0.0;
 		for (int i = 0; i < out.get_col(); ++i) {
@@ -108,11 +109,10 @@ int main()
 			}
 		}
 		std::cout << '\n';
-		//std::vector<float> image = 
-		parser.get_image(c,true);
-		int label = parser.get_label(c++);
-		std::cout << "Label " << label << '\n';
+		test_data.get_image(c,true);
+		int label = test_data.get_label(c);
 		std::cout << "Guess " << max << '\n';
+		++c;
 		in = getchar();
 	}//*/
 	//_CrtDumpMemoryLeaks();
