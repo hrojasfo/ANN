@@ -10,7 +10,6 @@ int main()
 
 	w.print();
 
-	getchar();
     return 0;
 }
 

@@ -1,4 +1,5 @@
-﻿  unittest1.cpp
+﻿  stdafx.cpp
+  unittest1.cpp
 c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
   c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): note: see declaration of 'std::copy::_Unchecked_iterators::_Deprecate'
   c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(130): note: see reference to function template instantiation '_OutIt std::copy<T*,T*>(_InIt,_InIt,_OutIt)' being compiled
@@ -11,5 +12,7 @@ c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.1
   c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(127): note: while compiling class template member function 'Matrix<double> &Matrix<double>::operator =(const Matrix<double> &)'
   c:\users\hrojas\source\repos\ann\ann\ann_tests\unittest1.cpp(94): note: see reference to function template instantiation 'Matrix<double> &Matrix<double>::operator =(const Matrix<double> &)' being compiled
   c:\users\hrojas\source\repos\ann\ann\ann_tests\unittest1.cpp(16): note: see reference to class template instantiation 'Matrix<double>' being compiled
+     Creating library C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\ANN_tests.lib and object C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\ANN_tests.exp
   ANN_tests.vcxproj -> C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\ANN_tests.dll
   ANN_tests.vcxproj -> C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\ANN_tests.pdb (Partial PDB)
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(220): warning C6001: Using uninitialized memory 'val'.

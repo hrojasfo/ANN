@@ -15,7 +15,7 @@ namespace neural_network {
 		// Add entry for inputs
 		Matrix<base> out(1, in[0]);
 		output.push_back(out);
-		for (int i = 1; i < in.size(); ++i) {
+		for (unsigned int i = 1; i < in.size(); ++i) {
 			//Matrix<base> w(in[i - 1] + 1, in[i]);
 			Matrix<base> w(in[i - 1], in[i], "rand");
 			weights.push_back(w);
@@ -204,7 +204,7 @@ namespace neural_network {
 		bias.clear();
 		int half = input.size() >> 1;
 		// weights are in the lower half and bias in the top of the array
-		for (int i = 0; i < input.size(); ++i) {
+		for (unsigned int i = 0; i < input.size(); ++i) {
 			if (i < half) {
 				weights.push_back(input[i]);
 			}

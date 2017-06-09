@@ -1,4 +1,5 @@
-﻿  Numbers_NN.cpp
+﻿  stdafx.cpp
+  Numbers_NN.cpp
 c:\users\hrojas\source\repos\ann\ann\numbers_nn\numbers_nn.cpp(78): warning C4305: 'argument': truncation from 'double' to 'neural_network::base'
 c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
   c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.10.25017\include\xutility(2350): note: see declaration of 'std::copy::_Unchecked_iterators::_Deprecate'

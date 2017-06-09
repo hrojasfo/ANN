@@ -1,16 +1,6 @@
-﻿  ANN.cpp
-c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(210): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(204): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
-  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(81): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
-  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(79): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
-  c:\users\hrojas\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to function template instantiation 'Matrix<float>::Matrix(int,int,std::string)' being compiled
-  c:\users\hrojas\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to class template instantiation 'Matrix<float>' being compiled
-c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(213): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  Compiling...
+﻿  stdafx.cpp
   Neural_network.cpp
-c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(18): warning C4018: '<': signed/unsigned mismatch
-c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(207): warning C4018: '<': signed/unsigned mismatch
+c:\users\hrojas\source\repos\ann\ann\ann\neural_network.cpp(208): warning C4018: '<': signed/unsigned mismatch
 c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(210): warning C4244: '=': conversion from 'double' to 'neural_network::base', possible loss of data
   c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(204): note: while compiling class template member function 'void Matrix<neural_network::base>::setup_matrix(std::string)'
   c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(81): note: see reference to function template instantiation 'void Matrix<neural_network::base>::setup_matrix(std::string)' being compiled
@@ -27,5 +17,17 @@ c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.1
               T=neural_network::base,
               _InIt=neural_network::base *
           ]
+  Image_parser.cpp
+c:\users\hrojas\source\repos\ann\ann\ann\image_parser.cpp(37): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
+c:\users\hrojas\source\repos\ann\ann\ann\image_parser.cpp(58): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
+c:\users\hrojas\source\repos\ann\ann\ann\image_parser.cpp(106): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  ANN.cpp
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(210): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(204): note: while compiling class template member function 'void Matrix<float>::setup_matrix(std::string)'
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(81): note: see reference to function template instantiation 'void Matrix<float>::setup_matrix(std::string)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(79): note: while compiling class template member function 'Matrix<float>::Matrix(int,int,std::string)'
+  c:\users\hrojas\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to function template instantiation 'Matrix<float>::Matrix(int,int,std::string)' being compiled
+  c:\users\hrojas\source\repos\ann\ann\ann\ann.cpp(9): note: see reference to class template instantiation 'Matrix<float>' being compiled
+c:\users\hrojas\source\repos\ann\ann\ann\matrix.h(213): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Generating Code...
   ANN.vcxproj -> C:\Users\hrojas\Source\Repos\ANN\ANN\Debug\ANN.lib
